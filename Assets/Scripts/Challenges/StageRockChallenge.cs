@@ -12,12 +12,41 @@ public class StageRockChallenge : Challenge
     public bool Completed { get { return Current >= X; } }
     public string Description { get { return ""; } }
 
-
+    private bool _hitByRock = false;
 
     public StageRockChallenge(int x, int score, int current = 0)
     {
         X = x;
         Current = current;
         Score = score;
+
+        EventManager.Instance.OnRockCollisionEvent += OnRockCollisionEvent;
+        EventManager.Instance.OnAnchorGrabbedEvent += OnAnchorGrabbedEvent;
+        EventManager.Instance.OnStageStartedEvent += OnStageStartedEvent;
+    }
+
+    private void OnStageStartedEvent()
+    {
+        if (!Completed)
+        {
+            _hitByRock = false;
+            Current = 0;
+        }
+    }
+
+    private void OnAnchorGrabbedEvent()
+    {
+        if (!Completed && _hitByRock)
+        {
+            Current++;
+        }
+    }
+
+    private void OnRockCollisionEvent()
+    {
+        if (!Completed)
+        {
+            _hitByRock = true;
+        }
     }
 }
