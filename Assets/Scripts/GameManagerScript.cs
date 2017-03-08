@@ -28,8 +28,6 @@ public class GameManagerScript : MonoBehaviour
     //
     //==========================================================================================
 
-
-
     [SerializeField]
     private List<CharacterListElement> _characterPrefabs;
 
@@ -47,6 +45,8 @@ public class GameManagerScript : MonoBehaviour
     //==========================================================================================
 
     private EnvironmentInfo _environment;
+
+    private Challenge _challenge;
 
     //==========================================================================================
     //
@@ -70,13 +70,15 @@ public class GameManagerScript : MonoBehaviour
             {
                 totalPossibleScore += x;
             }
-            //Debug.Log("total possible score: " + totalPossibleScore);
             if (TotalScore > totalPossibleScore)
             {
                 TotalScore = totalPossibleScore;
             }
-            //*****
 
+            //*****
+            LoadChallenge();
+
+            //*****
             AmplitudeHelper.AppId = "e42975312282ef47be31ec6af5cb48fc";
             AmplitudeHelper.Instance.FillCustomProperties += FillTrackingProperties;
             AmplitudeHelper.Instance.LogEvent("Start Game");
@@ -115,6 +117,8 @@ public class GameManagerScript : MonoBehaviour
     public int OldTotalScore { get; private set; }
 
     public int MaxLevel { get { return _levelExperience.Count; } }
+
+    public Challenge CurrentChallenge { get { return _challenge; } }
 
     //==========================================================================================
     // Environment Properties
@@ -188,7 +192,34 @@ public class GameManagerScript : MonoBehaviour
 
     public void LoadMenu()
     {
+        PlayerCharacterScript player = GameObject.FindObjectOfType<PlayerCharacterScript>();
+        Dictionary<string, object> customProperties;
+
+        //**************************************************************
+        //Send EventManager StageEnded event
+        EventManager.Instance.SendOnStageEndedEvent((int)player.HighestAltitude, GameManagerScript.Instance.CharacterName);
+
+        //**************************************************************
+        //Update Score
         SessionScore = (int)UIManager.Instance.Score;
+
+        if (_challenge.Completed)
+        {
+            SessionScore += _challenge.Score;
+
+            string challengeName = _challenge.Name;
+            int challengeLifetime = _challenge.Lifetime;
+            int challengeTargetValue = _challenge.X;
+
+            customProperties = new Dictionary<string, object>()
+            {
+                {"challenge name", challengeName },
+                {"challenge lifetime", challengeLifetime },
+                {"challenge targetValue", challengeTargetValue }
+            };
+
+            AmplitudeHelper.Instance.LogEvent("Challenge completed", customProperties);
+        }
 
         if (SessionScore > BestSessionScore)
         {
@@ -200,7 +231,8 @@ public class GameManagerScript : MonoBehaviour
         TotalScore += SessionScore;
         int newLevel = ComputeLevel(TotalScore) + 1;
 
-        //*****
+        //**************************************************************
+        //Clamp Score
         int totalPossibleScore = 0;
         foreach (int x in _levelExperience)
         {
@@ -210,21 +242,23 @@ public class GameManagerScript : MonoBehaviour
         {
             TotalScore = totalPossibleScore;
         }
-        //*****
 
+        //**************************************************************
+        // Send Amplitude LevelUp event
         if (newLevel > oldLevel && newLevel % 5 == 0)
         {
             AmplitudeHelper.Instance.LogEvent("lvl " + newLevel + " reached");
         }
 
-        //***************************
+        //**************************************************************
+        //Update PlayerPrefs
         PlayerPrefs.SetInt("TotalScore", TotalScore);
         PlayerPrefs.SetInt("BestSessionScore", BestSessionScore);
 
-        //***************************
-        PlayerCharacterScript player = GameObject.FindObjectOfType<PlayerCharacterScript>();
+        //**************************************************************
+        //Send Amplitude StageEnd event
 
-        var customProperties = new Dictionary<string, object>()
+        customProperties = new Dictionary<string, object>()
         {
             {"Environment", EnvironmentName },
             {"Stage Score", SessionScore },
@@ -235,7 +269,12 @@ public class GameManagerScript : MonoBehaviour
 
         AmplitudeHelper.Instance.LogEvent("Stage End", customProperties);
 
-        //***************************
+        //**************************************************************
+        //Update Challenge PlayerPrefs
+        PlayerPrefs.SetInt("ChallengeCurrent", _challenge.Current);
+
+        //**************************************************************
+        //Load Menu scene
         SceneManager.LoadSceneAsync("Scenes/Menu");
     }
 
@@ -284,6 +323,29 @@ public class GameManagerScript : MonoBehaviour
         return acc;
     }
 
+    public void ChangeChallenge()
+    {
+        string oldChallengeName = _challenge.Name;
+        int oldChallengeLifetime = _challenge.Lifetime;
+        int oldChallengeTargetValue = _challenge.X;
+
+        CreateChallenge();
+
+        string newChallengeName = _challenge.Name;
+        int newChallengeTargetValue = _challenge.X;
+
+        var customProperties = new Dictionary<string, object>()
+        {
+            {"old challenge name", oldChallengeName },
+            {"old challenge lifetime", oldChallengeLifetime },
+            {"old challenge targetValue", oldChallengeTargetValue },
+            {"new challenge name", newChallengeName },
+            {"new challenge targetValue", newChallengeTargetValue }
+        };
+
+        AmplitudeHelper.Instance.LogEvent("Challenge changed", customProperties);
+    }
+
     //==========================================================================================
     //
     //==========================================================================================
@@ -327,6 +389,9 @@ public class GameManagerScript : MonoBehaviour
 
             charLeftHand.connectedBody = anchor1Rigidbody;
             charRightHand.connectedBody = anchor2Rigidbody;
+
+            //*****
+            EventManager.Instance.SendOnStageStartedEvent();
         }
         else if (scene.name == "Menu")
         {
@@ -353,6 +418,36 @@ public class GameManagerScript : MonoBehaviour
         int x = PlayerPrefs.GetInt("ChallengeX");
         int current = PlayerPrefs.GetInt("ChallengeCurrent");
         int score = PlayerPrefs.GetInt("ChallengeScore");
+
+        switch (challengeName)
+        {
+            case "ForeverAltitudeChallenge":
+                _challenge = new ForeverAltitudeChallenge(x, score, current);
+                break;
+            case "ForeverAnchorChallenge":
+                _challenge = new ForeverAnchorChallenge(x, score, current);
+                break;
+            case "ForeverMoonstoneChallenge":
+                _challenge = new ForeverMoonstoneChallenge(x, score, current);
+                break;
+            case "ForeverRockChallenge":
+                _challenge = new ForeverRockChallenge(x, score, current);
+                break;
+            case "StageAltitudeChallenge":
+                _challenge = new StageAltitudeChallenge(x, score, current);
+                break;
+            case "StageAnchorChallenge":
+                _challenge = new StageAnchorChallenge(x, score, current);
+                break;
+            case "StageMoonstoneChallenge":
+                _challenge = new StageMoonstoneChallenge(x, score, current);
+                break;
+            case "CharacterChallenge":
+                break;
+            case "StageRockChallenge":
+                _challenge = new StageRockChallenge(x, score);
+                break;
+        }
     }
 
     private void CreateChallenge()
@@ -364,26 +459,36 @@ public class GameManagerScript : MonoBehaviour
         switch (challengeInfo.name)
         {
             case "ForeverAltitudeChallenge":
+                _challenge = new ForeverAltitudeChallenge(x, score);
                 break;
             case "ForeverAnchorChallenge":
+                _challenge = new ForeverAnchorChallenge(x, score);
                 break;
             case "ForeverMoonstoneChallenge":
+                _challenge = new ForeverMoonstoneChallenge(x, score);
+                break;
+            case "ForeverRockChallenge":
+                _challenge = new ForeverRockChallenge(x, score);
                 break;
             case "StageAltitudeChallenge":
+                _challenge = new StageAltitudeChallenge(x, score);
                 break;
             case "StageAnchorChallenge":
+                _challenge = new StageAnchorChallenge(x, score);
                 break;
             case "StageMoonstoneChallenge":
+                _challenge = new StageMoonstoneChallenge(x, score);
                 break;
             case "CharacterChallenge":
                 break;
-            case "RockChallenge":
+            case "StageRockChallenge":
+                _challenge = new StageRockChallenge(x, score);
                 break;
         }
 
         PlayerPrefs.SetString("ChallengeName", challengeInfo.name);
         PlayerPrefs.SetInt("ChallengeX", x);
-        PlayerPrefs.SetInt("ChallengeCUrrent", 0);
+        PlayerPrefs.SetInt("ChallengeCurrent", 0);
         PlayerPrefs.SetInt("ChallengeScore", score);
     }
 }
