@@ -7,6 +7,7 @@ public class ForeverAnchorChallenge : Challenge
     public int X { get; private set; }
     public int Current { get; private set; }
     public int Score { get; private set; }
+    public int Lifetime { get; private set; }
 
     public string Name { get { return "ForeverAnchorChallenge"; } }
     public bool Completed { get { return Current >= X; } }
@@ -19,6 +20,15 @@ public class ForeverAnchorChallenge : Challenge
         Score = score;
 
         EventManager.Instance.OnAnchorGrabbedEvent += OnAnchorGrabbedEvent;
+        EventManager.Instance.OnStageEndedEvent += OnStageEndedEvent;
+    }
+
+    private void OnStageEndedEvent(int altitude, string character)
+    {
+        if (!Completed)
+        {
+            Lifetime++;
+        }
     }
 
     private void OnAnchorGrabbedEvent()

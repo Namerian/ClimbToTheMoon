@@ -192,6 +192,13 @@ public class GameManagerScript : MonoBehaviour
 
     public void LoadMenu()
     {
+        PlayerCharacterScript player = GameObject.FindObjectOfType<PlayerCharacterScript>();
+        Dictionary<string, object> customProperties;
+
+        //**************************************************************
+        //Send EventManager StageEnded event
+        EventManager.Instance.SendOnStageEndedEvent((int)player.HighestAltitude, GameManagerScript.Instance.CharacterName);
+
         //**************************************************************
         //Update Score
         SessionScore = (int)UIManager.Instance.Score;
@@ -199,6 +206,19 @@ public class GameManagerScript : MonoBehaviour
         if (_challenge.Completed)
         {
             SessionScore += _challenge.Score;
+
+            string challengeName = _challenge.Name;
+            int challengeLifetime = _challenge.Lifetime;
+            int challengeTargetValue = _challenge.X;
+
+            customProperties = new Dictionary<string, object>()
+            {
+                {"challenge name", challengeName },
+                {"challenge lifetime", challengeLifetime },
+                {"challenge targetValue", challengeTargetValue }
+            };
+
+            AmplitudeHelper.Instance.LogEvent("Challenge completed", customProperties);
         }
 
         if (SessionScore > BestSessionScore)
@@ -237,9 +257,8 @@ public class GameManagerScript : MonoBehaviour
 
         //**************************************************************
         //Send Amplitude StageEnd event
-        PlayerCharacterScript player = GameObject.FindObjectOfType<PlayerCharacterScript>();
 
-        var customProperties = new Dictionary<string, object>()
+        customProperties = new Dictionary<string, object>()
         {
             {"Environment", EnvironmentName },
             {"Stage Score", SessionScore },
@@ -249,10 +268,6 @@ public class GameManagerScript : MonoBehaviour
         };
 
         AmplitudeHelper.Instance.LogEvent("Stage End", customProperties);
-
-        //**************************************************************
-        //Send EventManager StageEnded event
-        EventManager.Instance.SendOnStageEndedEvent((int)player.HighestAltitude, GameManagerScript.Instance.CharacterName);
 
         //**************************************************************
         //Update Challenge PlayerPrefs
@@ -311,6 +326,7 @@ public class GameManagerScript : MonoBehaviour
     public void ChangeChallenge()
     {
         string oldChallengeName = _challenge.Name;
+        int oldChallengeLifetime = _challenge.Lifetime;
         int oldChallengeTargetValue = _challenge.X;
 
         CreateChallenge();
@@ -321,6 +337,7 @@ public class GameManagerScript : MonoBehaviour
         var customProperties = new Dictionary<string, object>()
         {
             {"old challenge name", oldChallengeName },
+            {"old challenge lifetime", oldChallengeLifetime },
             {"old challenge targetValue", oldChallengeTargetValue },
             {"new challenge name", newChallengeName },
             {"new challenge targetValue", newChallengeTargetValue }

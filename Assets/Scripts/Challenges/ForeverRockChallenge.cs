@@ -7,6 +7,7 @@ public class ForeverRockChallenge : Challenge
     public int X { get; private set; }
     public int Current { get; private set; }
     public int Score { get; private set; }
+    public int Lifetime { get; private set; }
 
     public string Name { get { return "ForeverRockChallenge"; } }
     public bool Completed { get { return Current >= X; } }
@@ -29,6 +30,7 @@ public class ForeverRockChallenge : Challenge
     {
         if (!Completed)
         {
+            Lifetime++;
             _hitByRock = false;
         }
     }

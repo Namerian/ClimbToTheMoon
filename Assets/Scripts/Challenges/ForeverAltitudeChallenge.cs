@@ -7,6 +7,7 @@ public class ForeverAltitudeChallenge : Challenge
     public int X { get; private set; }
     public int Current { get; private set; }
     public int Score { get; private set; }
+    public int Lifetime { get; private set; }
 
     public string Name { get { return "ForeverAltitudeChallenge"; } }
     public bool Completed { get { return Current >= X; } }
@@ -25,6 +26,7 @@ public class ForeverAltitudeChallenge : Challenge
     {
         if (!Completed)
         {
+            Lifetime++;
             Current += altitude;
         }
     }

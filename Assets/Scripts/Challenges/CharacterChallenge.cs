@@ -7,6 +7,7 @@ public class CharacterChallenge : Challenge
     public int X { get; private set; }
     public int Current { get; private set; }
     public int Score { get; private set; }
+    public int Lifetime { get; private set; }
 
     public string Name { get { return "CharacterChallenge"; } }
     public bool Completed { get { return Current >= X; } }
