@@ -8,10 +8,11 @@ public class StageAltitudeChallenge : Challenge
     public int X { get; private set; }
     public int Current { get; private set; }
     public int Score { get; private set; }
+    public int Lifetime { get; private set; }
 
     public string Name { get { return "StageAltitudeChallenge"; } }
     public bool Completed { get { return Current >= X; } }
-    public string Description { get { return ""; } }
+    public string Description { get { return "Climb " + X + "m! (in one go) - " + Current + "/" + X; } }
 
     public StageAltitudeChallenge(int x, int score, int current = 0)
     {
@@ -24,8 +25,9 @@ public class StageAltitudeChallenge : Challenge
 
     private void OnStageEndedEvent(int altitude, string character)
     {
-        if (altitude > Current && !Completed)
+        if (!Completed)
         {
+            Lifetime++;
             Current = altitude;
         }
     }

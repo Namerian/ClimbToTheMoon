@@ -14,16 +14,18 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
     private MenuScript _menu;
 
     private CanvasGroup _canvasGroup;
+
     private Text _lastSessionScoreText;
     private Text _bestSessionScoreText;
     private Text _totalScoreText;
+
     private Text _currentLevelText;
     private Text _nextLevelText;
     private Slider _levelSlider;
 
-    //private Button _rewardButton1;
-    //private Button _rewardButton2;
-    //private Button _rewardButton3;
+    private GameObject _challengeCompleted;
+    private Text _challengeScoreText;
+    private Text _challengeDescriptionText;
 
     private bool _active = false;
     private bool _updated = false;
@@ -35,20 +37,26 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
     private float _currentLevelScore;
     private float _targetTotalScore;
 
+    //==========================================================================================
+    //
+    //==========================================================================================
+
     void Awake()
     {
         _menu = this.transform.parent.GetComponent<MenuScript>();
         _canvasGroup = GetComponent<CanvasGroup>();
+
         _lastSessionScoreText = this.transform.Find("LevelPanel/LastSessionScoreText").GetComponent<Text>();
         _bestSessionScoreText = this.transform.Find("LevelPanel/BestSessionScoreText").GetComponent<Text>();
         _totalScoreText = this.transform.Find("LevelPanel/TotalScoreText").GetComponent<Text>();
+
         _currentLevelText = this.transform.Find("LevelPanel/CurrentLevelText").GetComponent<Text>();
         _nextLevelText = this.transform.Find("LevelPanel/NextLevelText").GetComponent<Text>();
         _levelSlider = this.transform.Find("LevelPanel/Slider").GetComponent<Slider>();
 
-        //_rewardButton1 = this.transform.Find("RewardPanel/RewardButton1").GetComponent<Button>();
-        //_rewardButton2 = this.transform.Find("RewardPanel/RewardButton2").GetComponent<Button>();
-        //_rewardButton3 = this.transform.Find("RewardPanel/RewardButton3").GetComponent<Button>();
+        _challengeCompleted = this.transform.Find("ChallengePanel/UpperLine/ChallengeCompleted").gameObject;
+        _challengeScoreText = this.transform.Find("ChallengePanel/UpperLine/ChallengeScoreText").GetComponent<Text>();
+        _challengeDescriptionText = this.transform.Find("ChallengePanel/ChallengeDescriptionText").GetComponent<Text>();
 
         _canvasGroup.alpha = 0;
         _canvasGroup.interactable = false;
@@ -102,19 +110,29 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
         }
     }
 
+    //==========================================================================================
+    //
+    //==========================================================================================
+
     public void OnEnter()
     {
         if (!_active)
         {
+            //**************************************************
+            //show menu
             _active = true;
             _canvasGroup.alpha = 1;
             _canvasGroup.interactable = true;
             _canvasGroup.blocksRaycasts = true;
 
+            //**************************************************
+            //update score texts
             _lastSessionScoreText.text = "Last Stage Score: " + GameManagerScript.Instance.SessionScore;
             _bestSessionScoreText.text = "Best Stage Score: " + GameManagerScript.Instance.BestSessionScore;
             _totalScoreText.text = "Cumulated Score: " + GameManagerScript.Instance.TotalScore;
 
+            //**************************************************
+            //update score slider
             _currentLevel = GameManagerScript.Instance.ComputeLevel(GameManagerScript.Instance.OldTotalScore);
 
             if (!_updated && GameManagerScript.Instance.SessionScore > 0 && _currentLevel < GameManagerScript.Instance.MaxLevel)
@@ -135,10 +153,6 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
 
                 float initialSliderFill = _currentLevelScore / _nextLevelRequiredScore;
                 _levelSlider.value = initialSliderFill;
-
-                //Debug.Log("start: total score = " + _currentTotalScore);
-                //Debug.Log("start: rest score = " + _currentLevelScore);
-                //Debug.Log("start: target score = " + _targetTotalScore);
             }
             else
             {
@@ -166,6 +180,10 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
 
             UpdateLevelText(_currentLevel);
             UpdateRewardButtons(_currentLevel);
+
+            //**************************************************
+            //update challenge panel
+            UpdateChallengePanel();
         }
     }
 
@@ -173,16 +191,31 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
     {
         if (_active)
         {
+            //**************************************************
+            //hide menu
             _active = false;
             _canvasGroup.alpha = 0;
             _canvasGroup.interactable = false;
             _canvasGroup.blocksRaycasts = false;
 
+            //**************************************************
+            //interrupt updating
             if (_updating)
             {
                 _updated = true;
                 _updating = false;
             }
+
+            //**************************************************
+            //generate new challenge
+            if (GameManagerScript.Instance.CurrentChallenge.Completed)
+            {
+                GameManagerScript.Instance.ChangeChallenge();
+            }
+
+            //**************************************************
+            //deactivate challenge completed stuff
+            _challengeCompleted.SetActive(false);
         }
     }
 
@@ -194,6 +227,12 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
     public void ShowStory(GameObject toShow)
     {
         toShow.SetActive(true);
+    }
+
+    public void OnChangeChallengeButton()
+    {
+        GameManagerScript.Instance.ChangeChallenge();
+        UpdateChallengePanel();
     }
 
     //==========================================================================================
@@ -234,7 +273,24 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
             }
         }
     }
+
+    private void UpdateChallengePanel()
+    {
+        Challenge challenge = GameManagerScript.Instance.CurrentChallenge;
+
+        _challengeScoreText.text = "+ " + challenge.Score + " PTS";
+        _challengeDescriptionText.text = challenge.Description;
+
+        if (challenge.Completed)
+        {
+            _challengeCompleted.SetActive(true);
+        }
+    }
 }
+
+//---------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 
 [System.Serializable]
 public class RewardListElement

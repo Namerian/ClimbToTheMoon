@@ -110,9 +110,7 @@ public class CameraScript : MonoBehaviour
         if (!_started)
         {
             EventManager.Instance.OnAnchorGrabbedEvent -= OnAnchorGrabbedEvent;
-
             this.transform.Find("Music").GetComponent<AudioSource>().Play();
-
             _started = true;
         }
     }

@@ -29,14 +29,17 @@ public class UIManager : MonoBehaviour
     //
     //==========================================================================================
 
+    [SerializeField]
+    private float _scoreInterval = 0.1f;
+
     public Text scoreText, comboText, addScoreText, altitudeText;
     public Transform faster;
     private float _score;
     public int combo;
     public Color[] comboColors;
 
-    [SerializeField]
-    private float _scoreInterval = 0.1f;
+    private bool _started = false;
+    private float _altitude;
 
     //==========================================================================================
     //
@@ -64,7 +67,7 @@ public class UIManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Invoke("UpdateScore", _scoreInterval);
+        EventManager.Instance.OnAnchorGrabbedEvent += OnAnchorGrabbedEvent;
     }
 
     // Update is called once per frame
@@ -97,6 +100,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateAltitude(float altitude)
     {
+        _altitude = altitude;
         altitudeText.text = "" + Mathf.Round(altitude) + "m";
     }
 
@@ -121,7 +125,7 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator AddScoreCoroutine(float scoreToAdd)
     {
-        scoreToAdd *= GameManagerScript.Instance.ScoreMultiplier;
+        scoreToAdd *= GameManagerScript.Instance.GetScoreMultiplier(_altitude);
         _score += scoreToAdd;
 
         addScoreText.text = "+" + (int)scoreToAdd;
@@ -137,8 +141,18 @@ public class UIManager : MonoBehaviour
 
     private void UpdateScore()
     {
-        _score += combo * GameManagerScript.Instance.ScoreMultiplier;
+        _score += combo * GameManagerScript.Instance.GetScoreMultiplier(_altitude);
 
         Invoke("UpdateScore", _scoreInterval);
+    }
+
+    private void OnAnchorGrabbedEvent()
+    {
+        if (!_started)
+        {
+            EventManager.Instance.OnAnchorGrabbedEvent -= OnAnchorGrabbedEvent;
+            Invoke("UpdateScore", _scoreInterval);
+            _started = true;
+        }
     }
 }
