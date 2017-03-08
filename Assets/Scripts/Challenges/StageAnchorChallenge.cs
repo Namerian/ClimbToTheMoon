@@ -10,7 +10,7 @@ public class StageAnchorChallenge : Challenge
 
     public string Name { get { return "StageAnchorChallenge"; } }
     public bool Completed { get { return Current >= X; } }
-    public string Description { get { return ""; } }
+    public string Description { get { return "Grab " + X + " Anchors! (in one go) - " + Current + "/" + X; } }
 
     public StageAnchorChallenge(int x, int score, int current = 0)
     {

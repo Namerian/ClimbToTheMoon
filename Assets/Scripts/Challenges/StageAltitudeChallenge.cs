@@ -11,7 +11,7 @@ public class StageAltitudeChallenge : Challenge
 
     public string Name { get { return "StageAltitudeChallenge"; } }
     public bool Completed { get { return Current >= X; } }
-    public string Description { get { return ""; } }
+    public string Description { get { return "Climb " + X + "m! (in one go) - " + Current + "/" + X; } }
 
     public StageAltitudeChallenge(int x, int score, int current = 0)
     {

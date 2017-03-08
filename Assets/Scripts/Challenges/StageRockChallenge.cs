@@ -8,9 +8,9 @@ public class StageRockChallenge : Challenge
     public int Current { get; private set; }
     public int Score { get; private set; }
 
-    public string Name { get { return "StageAnchorChallenge"; } }
+    public string Name { get { return "StageRockChallenge"; } }
     public bool Completed { get { return Current >= X; } }
-    public string Description { get { return ""; } }
+    public string Description { get { return "Survive being hit by a rock! " + X + " times! (in one go) - " + Current + "/" + X; } }
 
     private bool _hitByRock = false;
 

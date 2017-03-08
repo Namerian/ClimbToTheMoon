@@ -8,9 +8,9 @@ public class ForeverAltitudeChallenge : Challenge
     public int Current { get; private set; }
     public int Score { get; private set; }
 
-    public string Name { get { return "StageAnchorChallenge"; } }
+    public string Name { get { return "ForeverAltitudeChallenge"; } }
     public bool Completed { get { return Current >= X; } }
-    public string Description { get { return ""; } }
+    public string Description { get { return "Climb " + X + "m! (cumulated) - " + Current + "/" + X; } }
 
     public ForeverAltitudeChallenge(int x, int score, int current = 0)
     {

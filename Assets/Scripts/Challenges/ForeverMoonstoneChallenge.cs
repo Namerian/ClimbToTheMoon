@@ -2,15 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ForeverMoonstoneChallenge : MonoBehaviour {
+public class ForeverMoonstoneChallenge : Challenge
+{
+    public int X { get; private set; }
+    public int Current { get; private set; }
+    public int Score { get; private set; }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public string Name { get { return "ForeverMoonstoneChallenge"; } }
+    public bool Completed { get { return Current >= X; } }
+    public string Description { get { return "Collect " + X + " Moonstones! (cumulated) - " + Current + "/" + X; } }
+
+    public ForeverMoonstoneChallenge(int x, int score, int current = 0)
+    {
+        X = x;
+        Current = current;
+        Score = score;
+
+        EventManager.Instance.OnMoonstoneCollectedEvent += OnMoonstoneCollectedEvent;
+    }
+
+    private void OnMoonstoneCollectedEvent()
+    {
+        if (!Completed)
+        {
+            Current++;
+        }
+    }
 }
