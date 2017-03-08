@@ -471,7 +471,7 @@ public class GameManagerScript : MonoBehaviour
     {
         ChallengeInfo challengeInfo = _challengeList[Random.Range(0, _challengeList.Count - 1)];
         int x = Random.Range(challengeInfo.minXValue, challengeInfo.maxXValue);
-        int score = (int)(x * challengeInfo.multiplier);
+        int score = (int)(x * challengeInfo.multiplier * ComputeLevel(TotalScore));
 
         switch (challengeInfo.name)
         {

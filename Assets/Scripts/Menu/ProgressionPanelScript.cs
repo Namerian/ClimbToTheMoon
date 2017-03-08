@@ -212,6 +212,10 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
             {
                 GameManagerScript.Instance.ChangeChallenge();
             }
+
+            //**************************************************
+            //deactivate challenge completed stuff
+            _challengeCompleted.SetActive(false);
         }
     }
 
