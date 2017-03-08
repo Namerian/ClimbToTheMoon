@@ -38,7 +38,7 @@ public class GameManagerScript : MonoBehaviour
     private List<int> _levelExperience;
 
     [SerializeField]
-    private List<int> _challengeScoreMultiplierByLevel;
+    private List<float> _challengeScoreMultiplierByLevel;
 
     [SerializeField]
     private List<ChallengeInfo> _challengeList;
