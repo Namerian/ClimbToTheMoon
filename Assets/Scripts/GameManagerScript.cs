@@ -38,7 +38,7 @@ public class GameManagerScript : MonoBehaviour
     private List<int> _levelExperience;
 
     [SerializeField]
-    private List<int> _challengeScoreMultiplierByLevel;
+    private List<float> _challengeScoreMultiplierByLevel;
 
     [SerializeField]
     private List<ChallengeInfo> _challengeList;
@@ -474,7 +474,7 @@ public class GameManagerScript : MonoBehaviour
     {
         ChallengeInfo challengeInfo = _challengeList[Random.Range(0, _challengeList.Count - 1)];
         int x = Random.Range(challengeInfo.minXValue, challengeInfo.maxXValue);
-        int score = 0;//(int)(x * challengeInfo.multiplier * _challengeScoreMultiplierByLevel[ComputeLevel(TotalScore)]);
+        int score = (int)(x * challengeInfo.multiplier * _challengeScoreMultiplierByLevel[ComputeLevel(TotalScore)]);
 
         switch (challengeInfo.name)
         {
