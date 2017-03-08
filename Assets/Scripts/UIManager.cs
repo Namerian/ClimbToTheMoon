@@ -29,14 +29,16 @@ public class UIManager : MonoBehaviour
     //
     //==========================================================================================
 
+    [SerializeField]
+    private float _scoreInterval = 0.1f;
+
     public Text scoreText, comboText, addScoreText, altitudeText;
     public Transform faster;
     private float _score;
     public int combo;
     public Color[] comboColors;
 
-    [SerializeField]
-    private float _scoreInterval = 0.1f;
+    private bool _started = false;
 
     //==========================================================================================
     //
@@ -64,7 +66,7 @@ public class UIManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Invoke("UpdateScore", _scoreInterval);
+        EventManager.Instance.OnAnchorGrabbedEvent += OnAnchorGrabbedEvent;
     }
 
     // Update is called once per frame
@@ -140,5 +142,15 @@ public class UIManager : MonoBehaviour
         _score += combo * GameManagerScript.Instance.ScoreMultiplier;
 
         Invoke("UpdateScore", _scoreInterval);
+    }
+
+    private void OnAnchorGrabbedEvent()
+    {
+        if (!_started)
+        {
+            EventManager.Instance.OnAnchorGrabbedEvent -= OnAnchorGrabbedEvent;
+            Invoke("UpdateScore", _scoreInterval);
+            _started = true;
+        }
     }
 }

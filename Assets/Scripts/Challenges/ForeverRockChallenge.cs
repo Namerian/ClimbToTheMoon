@@ -7,10 +7,11 @@ public class ForeverRockChallenge : Challenge
     public int X { get; private set; }
     public int Current { get; private set; }
     public int Score { get; private set; }
+    public int Lifetime { get; private set; }
 
-    public string Name { get { return "StageAltitudeChallenge"; } }
+    public string Name { get { return "ForeverRockChallenge"; } }
     public bool Completed { get { return Current >= X; } }
-    public string Description { get { return ""; } }
+    public string Description { get { return "Survive being hit by a rock! " + X + " times! (cumulated) - " + Current + "/" + X; } }
 
     private bool _hitByRock=false;
 
@@ -29,17 +30,24 @@ public class ForeverRockChallenge : Challenge
     {
         if (!Completed)
         {
+            Lifetime++;
             _hitByRock = false;
         }
     }
 
     private void OnAnchorGrabbedEvent()
     {
-        throw new System.NotImplementedException();
+        if(!Completed && _hitByRock)
+        {
+            Current++;
+        }
     }
 
     private void OnRockCollisionEvent()
     {
-        throw new System.NotImplementedException();
+        if (!Completed)
+        {
+            _hitByRock = true;
+        }
     }
 }

@@ -2,15 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ForeverAnchorChallenge : MonoBehaviour {
+public class ForeverAnchorChallenge : Challenge
+{
+    public int X { get; private set; }
+    public int Current { get; private set; }
+    public int Score { get; private set; }
+    public int Lifetime { get; private set; }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public string Name { get { return "ForeverAnchorChallenge"; } }
+    public bool Completed { get { return Current >= X; } }
+    public string Description { get { return "Grab " + X + " Anchors! (cumulated) - " + Current + "/" + X; } }
+
+    public ForeverAnchorChallenge(int x, int score, int current = 0)
+    {
+        X = x;
+        Current = current;
+        Score = score;
+
+        EventManager.Instance.OnAnchorGrabbedEvent += OnAnchorGrabbedEvent;
+        EventManager.Instance.OnStageEndedEvent += OnStageEndedEvent;
+    }
+
+    private void OnStageEndedEvent(int altitude, string character)
+    {
+        if (!Completed)
+        {
+            Lifetime++;
+        }
+    }
+
+    private void OnAnchorGrabbedEvent()
+    {
+        if (!Completed)
+        {
+            Current++;
+        }
+    }
 }

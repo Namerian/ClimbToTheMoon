@@ -7,10 +7,11 @@ public class StageRockChallenge : Challenge
     public int X { get; private set; }
     public int Current { get; private set; }
     public int Score { get; private set; }
+    public int Lifetime { get; private set; }
 
-    public string Name { get { return "StageAnchorChallenge"; } }
+    public string Name { get { return "StageRockChallenge"; } }
     public bool Completed { get { return Current >= X; } }
-    public string Description { get { return ""; } }
+    public string Description { get { return "Survive being hit by a rock! " + X + " times! (in one go) - " + Current + "/" + X; } }
 
     private bool _hitByRock = false;
 
@@ -23,6 +24,15 @@ public class StageRockChallenge : Challenge
         EventManager.Instance.OnRockCollisionEvent += OnRockCollisionEvent;
         EventManager.Instance.OnAnchorGrabbedEvent += OnAnchorGrabbedEvent;
         EventManager.Instance.OnStageStartedEvent += OnStageStartedEvent;
+        EventManager.Instance.OnStageEndedEvent += OnStageEndedEvent;
+    }
+
+    private void OnStageEndedEvent(int altitude, string character)
+    {
+        if (!Completed)
+        {
+            Lifetime++;
+        }
     }
 
     private void OnStageStartedEvent()
