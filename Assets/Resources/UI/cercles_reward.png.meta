@@ -1,16 +1,14 @@
 fileFormatVersion: 2
-guid: da41a701229f1ca43b71829ab02cab6d
-timeCreated: 1489007354
+guid: 53da4dbe0dada794b9e312a2aff052aa
+timeCreated: 1489008094
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Monkey_Personnage_V2_0
-    21300002: Monkey_Personnage_V2_1
-    21300004: Monkey_Personnage_V2_2
-    21300006: Monkey_Personnage_V2_3
-    21300008: Monkey_Personnage_V2_4
-    21300010: Monkey_Personnage_V2_5
-    21300012: Monkey_Personnage_V2_6
+    21300000: cercles_reward_0
+    21300002: cercles_reward_1
+    21300004: cercles_reward_2
+    21300006: cercles_reward_3
+    21300008: cercles_reward_4
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -85,93 +83,67 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Monkey_Personnage_V2_0
+      name: cercles_reward_0
       rect:
         serializedVersion: 2
-        x: 32
-        y: 650
-        width: 702
-        height: 374
+        x: 0
+        y: 13
+        width: 596
+        height: 597
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cercles_reward_1
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 20
+        width: 598
+        height: 599
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Monkey_Personnage_V2_1
+      name: cercles_reward_2
       rect:
         serializedVersion: 2
-        x: 726
-        y: 724
-        width: 267
-        height: 244
+        x: 1242
+        y: 1
+        width: 637
+        height: 637
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Monkey_Personnage_V2_2
+      name: cercles_reward_3
       rect:
         serializedVersion: 2
-        x: 226
-        y: 400
-        width: 304
-        height: 252
+        x: 2046
+        y: 1
+        width: 638
+        height: 637
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Monkey_Personnage_V2_3
+      name: cercles_reward_4
       rect:
         serializedVersion: 2
-        x: 797
-        y: 500
-        width: 152
-        height: 196
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Monkey_Personnage_V2_5
-      rect:
-        serializedVersion: 2
-        x: 796
+        x: 2780
         y: 0
-        width: 153
-        height: 492
+        width: 636
+        height: 635
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Monkey_Personnage_V2_4
-      rect:
-        serializedVersion: 2
-        x: 229
-        y: 0
-        width: 298
-        height: 243
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Monkey_Personnage_V2_6
-      rect:
-        serializedVersion: 2
-        x: 157
-        y: 243
-        width: 454
-        height: 147
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
