@@ -310,7 +310,23 @@ public class GameManagerScript : MonoBehaviour
 
     public void ChangeChallenge()
     {
+        string oldChallengeName = _challenge.Name;
+        int oldChallengeTargetValue = _challenge.X;
+
         CreateChallenge();
+
+        string newChallengeName = _challenge.Name;
+        int newChallengeTargetValue = _challenge.X;
+
+        var customProperties = new Dictionary<string, object>()
+        {
+            {"old challenge name", oldChallengeName },
+            {"old challenge targetValue", oldChallengeTargetValue },
+            {"new challenge name", newChallengeName },
+            {"new challenge targetValue", newChallengeTargetValue }
+        };
+
+        AmplitudeHelper.Instance.LogEvent("Challenge changed", customProperties);
     }
 
     //==========================================================================================
