@@ -39,6 +39,7 @@ public class UIManager : MonoBehaviour
     public Color[] comboColors;
 
     private bool _started = false;
+    private float _altitude;
 
     //==========================================================================================
     //
@@ -99,6 +100,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateAltitude(float altitude)
     {
+        _altitude = altitude;
         altitudeText.text = "" + Mathf.Round(altitude) + "m";
     }
 
@@ -123,7 +125,7 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator AddScoreCoroutine(float scoreToAdd)
     {
-        scoreToAdd *= GameManagerScript.Instance.ScoreMultiplier;
+        scoreToAdd *= GameManagerScript.Instance.GetScoreMultiplier(_altitude);
         _score += scoreToAdd;
 
         addScoreText.text = "+" + (int)scoreToAdd;
@@ -139,7 +141,7 @@ public class UIManager : MonoBehaviour
 
     private void UpdateScore()
     {
-        _score += combo * GameManagerScript.Instance.ScoreMultiplier;
+        _score += combo * GameManagerScript.Instance.GetScoreMultiplier(_altitude);
 
         Invoke("UpdateScore", _scoreInterval);
     }
