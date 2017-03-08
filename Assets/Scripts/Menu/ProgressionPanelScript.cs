@@ -14,12 +14,16 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
     private MenuScript _menu;
 
     private CanvasGroup _canvasGroup;
+
     private Text _lastSessionScoreText;
     private Text _bestSessionScoreText;
     private Text _totalScoreText;
+
     private Text _currentLevelText;
     private Text _nextLevelText;
     private Slider _levelSlider;
+
+    private GameObject _challengeCompleted;
     private Text _challengeScoreText;
     private Text _challengeDescriptionText;
 
@@ -41,13 +45,17 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
     {
         _menu = this.transform.parent.GetComponent<MenuScript>();
         _canvasGroup = GetComponent<CanvasGroup>();
+
         _lastSessionScoreText = this.transform.Find("LevelPanel/LastSessionScoreText").GetComponent<Text>();
         _bestSessionScoreText = this.transform.Find("LevelPanel/BestSessionScoreText").GetComponent<Text>();
         _totalScoreText = this.transform.Find("LevelPanel/TotalScoreText").GetComponent<Text>();
+
         _currentLevelText = this.transform.Find("LevelPanel/CurrentLevelText").GetComponent<Text>();
         _nextLevelText = this.transform.Find("LevelPanel/NextLevelText").GetComponent<Text>();
         _levelSlider = this.transform.Find("LevelPanel/Slider").GetComponent<Slider>();
-        _challengeScoreText = this.transform.Find("ChallengePanel/ChallengeScoreText").GetComponent<Text>();
+
+        _challengeCompleted = this.transform.Find("ChallengePanel/UpperLine/ChallengeCompleted").gameObject;
+        _challengeScoreText = this.transform.Find("ChallengePanel/UpperLine/ChallengeScoreText").GetComponent<Text>();
         _challengeDescriptionText = this.transform.Find("ChallengePanel/ChallengeDescriptionText").GetComponent<Text>();
 
         _canvasGroup.alpha = 0;
@@ -204,6 +212,10 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
             {
                 GameManagerScript.Instance.ChangeChallenge();
             }
+
+            //**************************************************
+            //deactivate challenge completed stuff
+            _challengeCompleted.SetActive(false);
         }
     }
 
@@ -268,6 +280,11 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
 
         _challengeScoreText.text = "+ " + challenge.Score + " PTS";
         _challengeDescriptionText.text = challenge.Description;
+
+        if (challenge.Completed)
+        {
+            _challengeCompleted.SetActive(true);
+        }
     }
 }
 

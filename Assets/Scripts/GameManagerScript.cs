@@ -175,8 +175,6 @@ public class GameManagerScript : MonoBehaviour
 
     public Sprite UIImage { get { return _environment.uiImage; } }
 
-    public float ScoreMultiplier { get { return _environment.scoreMultiplier; } }
-
     //==========================================================================================
     //
     //==========================================================================================
@@ -346,6 +344,25 @@ public class GameManagerScript : MonoBehaviour
         AmplitudeHelper.Instance.LogEvent("Challenge changed", customProperties);
     }
 
+    public float GetScoreMultiplier(float altitude)
+    {
+        float result = 1;
+
+        foreach(AccelerationStepElement element in _environment.accelerationSteps)
+        {
+            if(altitude >= element.height)
+            {
+                result = element.scoreMultiplier;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        return result;
+    }
+
     //==========================================================================================
     //
     //==========================================================================================
@@ -454,7 +471,7 @@ public class GameManagerScript : MonoBehaviour
     {
         ChallengeInfo challengeInfo = _challengeList[Random.Range(0, _challengeList.Count - 1)];
         int x = Random.Range(challengeInfo.minXValue, challengeInfo.maxXValue);
-        int score = (int)(x * challengeInfo.multiplier);
+        int score = (int)(x * challengeInfo.multiplier * ComputeLevel(TotalScore));
 
         switch (challengeInfo.name)
         {
@@ -509,6 +526,7 @@ public class AccelerationStepElement
 {
     public int height;
     public float acceleration;
+    public float scoreMultiplier;
 }
 
 [System.Serializable]
@@ -517,7 +535,6 @@ public class EnvironmentInfo
     public string name;
     public List<GameObject> uniqueChunks;
     public List<AccelerationStepElement> accelerationSteps;
-    public float scoreMultiplier;
     public bool spawnRocks;
     public float minRockSpawnTimer;
     public float maxRockSpawnTimer;
