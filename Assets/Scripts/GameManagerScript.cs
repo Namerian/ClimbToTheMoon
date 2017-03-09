@@ -308,7 +308,7 @@ public class GameManagerScript : MonoBehaviour
 
     public float GetAccelerationStep(int altitude)
     {
-        float acc = -1;
+        float acc = 1;
 
         foreach (AccelerationStepElement element in _environment.accelerationSteps)
         {
@@ -377,6 +377,12 @@ public class GameManagerScript : MonoBehaviour
 
         if (scene.name == "TestLevel")
         {
+            if (SceneManager.GetSceneByName("Menu").IsValid())
+            {
+                SceneManager.UnloadSceneAsync("Menu");
+            }
+
+            //*****
             int charIndex = 0;
 
             for (int i = 0; i < _characterPrefabs.Count; i++)
@@ -412,6 +418,11 @@ public class GameManagerScript : MonoBehaviour
         }
         else if (scene.name == "Menu")
         {
+            if (SceneManager.GetSceneByName("TestLevel").IsValid())
+            {
+                SceneManager.UnloadSceneAsync("TestLevel");
+            }
+
             Instantiate(Resources.Load("Prefabs/MenuCanvas"));
         }
     }
@@ -471,7 +482,8 @@ public class GameManagerScript : MonoBehaviour
     {
         ChallengeInfo challengeInfo = _challengeList[Random.Range(0, _challengeList.Count - 1)];
         int x = Random.Range(challengeInfo.minXValue, challengeInfo.maxXValue);
-        int score = (int)(x * challengeInfo.multiplier * _challengeScoreMultiplierByLevel[ComputeLevel(TotalScore)]);
+        int level = ComputeLevel(TotalScore);
+        int score = (int)(x * level * challengeInfo.multiplier * _challengeScoreMultiplierByLevel[level]);
 
         switch (challengeInfo.name)
         {
