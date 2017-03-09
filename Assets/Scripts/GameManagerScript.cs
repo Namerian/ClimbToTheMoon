@@ -160,7 +160,11 @@ public class GameManagerScript : MonoBehaviour
 
     public List<GameObject> EnvironmentChunks { get { return _environment.uniqueChunks; } }
 
+    public bool UseBackgroundSprite { get { return _environment.useBackgroundSprite; } }
+
     public Sprite BackgroundSprite { get { return _environment.backgroundSprite; } }
+
+    public GameObject CameraBackgroundPrefab { get { return _environment.cameraBackgroundPrefab; } }
 
     public Material BackgroundMaterial { get { return _environment.backgroundMaterial; } }
 
@@ -607,7 +611,9 @@ public class EnvironmentInfo
     public float maxRockSpawnTimer;
     public float rockSpawnOffset;
     public GameObject rockPrefab;
+    public bool useBackgroundSprite;
     public Sprite backgroundSprite;
+    public GameObject cameraBackgroundPrefab;
     public Material backgroundMaterial;
     public GameObject ambiancePrefab;
     public Color crevasseColour;
