@@ -609,15 +609,18 @@ public class EnvironmentInfo
     public string name;
     public List<GameObject> uniqueChunks;
     public List<AccelerationStepElement> accelerationSteps;
+    [Header("Rocks")]
     public bool spawnRocks;
     public float minRockSpawnTimer;
     public float maxRockSpawnTimer;
     public float rockSpawnOffset;
     public GameObject rockPrefab;
+    [Header("Background")]
     public bool useBackgroundSprite;
     public Sprite backgroundSprite;
     public GameObject cameraBackgroundPrefab;
     public Material backgroundMaterial;
+    [Header("Stuff")]
     public GameObject ambiancePrefab;
     public Color crevasseColour;
     public Color wallColour;
