@@ -107,8 +107,6 @@ public class GameManagerScript : MonoBehaviour
     // Properties
     //==========================================================================================
 
-    public int DifficultyLevel { get; set; }
-
     public string CharacterName { get; set; }
 
     public int SessionScore { get; private set; }

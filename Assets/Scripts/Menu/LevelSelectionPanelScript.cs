@@ -136,25 +136,12 @@ public class LevelSelectionPanelScript : MonoBehaviour, IMenuPanel
         _menu.SwitchPanel(_menu.ProgressionPanel);
     }
 
-    public void OnLevelButton(int difficulty)
+    public void OnLevelButton(string stageName)
     {
-        GameManagerScript.Instance.DifficultyLevel = difficulty;
-
         _canvasGroup.interactable = false;
         _loadingPanelCanvasGroup.alpha = 1;
 
-        switch (difficulty)
-        {
-            case 0:
-                GameManagerScript.Instance.EnvironmentName = "Ocean";
-                break;
-            case 1:
-                GameManagerScript.Instance.EnvironmentName = "Jungle";
-                break;
-            case 2:
-                GameManagerScript.Instance.EnvironmentName = "Mountain";
-                break;
-        }
+        GameManagerScript.Instance.EnvironmentName = stageName;
 
         GameManagerScript.Instance.StartGame();
     }
