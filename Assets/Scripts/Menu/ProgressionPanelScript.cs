@@ -19,6 +19,7 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
 
     private CanvasGroup _canvasGroup;
     private AudioSource _audioSource;
+    private CanvasGroup _loadingPanelCanvasGroup;
 
     private Text _lastSessionScoreText;
     private Text _bestSessionScoreText;
@@ -49,8 +50,10 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
     void Awake()
     {
         _menu = this.transform.parent.GetComponent<MenuScript>();
+
         _canvasGroup = GetComponent<CanvasGroup>();
         _audioSource = GetComponent<AudioSource>();
+        _loadingPanelCanvasGroup = this.transform.Find("PanelLoading").GetComponent<CanvasGroup>();
 
         _lastSessionScoreText = this.transform.Find("LevelPanel/LastSessionScoreText").GetComponent<Text>();
         _bestSessionScoreText = this.transform.Find("LevelPanel/BestSessionScoreText").GetComponent<Text>();
@@ -226,6 +229,10 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
         }
     }
 
+    //==========================================================================================
+    //
+    //==========================================================================================
+
     public void OnButtonBack()
     {
         _menu.SwitchPanel(_menu.LevelSelectionPanel);
@@ -240,6 +247,14 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
     {
         GameManagerScript.Instance.ChangeChallenge();
         UpdateChallengePanel();
+    }
+
+    public void OnRestartButton()
+    {
+        _canvasGroup.interactable = false;
+        _loadingPanelCanvasGroup.alpha = 1;
+
+        GameManagerScript.Instance.StartGame();
     }
 
     //==========================================================================================
