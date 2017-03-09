@@ -100,7 +100,7 @@ public class PlayerCharacterScript : MonoBehaviour
         //******************************************
         if (isDead)
         {
-            Debug.Log("Player Died!");
+            //Debug.Log("Player Died!");
             GetComponent<AudioSource>().Play();
             _isDead = true;
 
