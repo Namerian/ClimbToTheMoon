@@ -148,6 +148,11 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
+    public List<GameObject> EnvironmentChunks { get { return _environment.uniqueChunks; } }
+
+    //*****************************************************
+    //Rocks
+
     public bool SpawnRocks { get { return _environment.spawnRocks; } }
 
     public float MinRockSpawnTimer { get { return _environment.minRockSpawnTimer; } }
@@ -158,27 +163,41 @@ public class GameManagerScript : MonoBehaviour
 
     public GameObject RockPrefab { get { return _environment.rockPrefab; } }
 
-    public List<GameObject> EnvironmentChunks { get { return _environment.uniqueChunks; } }
+    //*****************************************************
+    //Background
 
-    public bool UseBackgroundSprite { get { return _environment.useBackgroundSprite; } }
+    public bool UseBackgroundSprite { get { return _environment.useBgSprite; } }
 
-    public Sprite BackgroundSprite { get { return _environment.backgroundSprite; } }
+    public Sprite BackgroundSprite { get { return _environment.bgSprite; } }
 
-    public GameObject CameraBackgroundPrefab { get { return _environment.cameraBackgroundPrefab; } }
+    public GameObject CameraBackgroundPrefab { get { return _environment.cameraBgPrefab; } }
 
-    public Material BackgroundMaterial { get { return _environment.backgroundMaterial; } }
+    public Material BackgroundMaterial { get { return _environment.bgMaterial; } }
 
-    public GameObject AmbianceBackground { get { return _environment.ambiancePrefab; } }
+    //*****************************************************
+    //Crevasse
+
+    public bool UseCrevasse { get { return _environment.useCrevasse; } }
 
     public Color CrevasseColor { get { return _environment.crevasseColour; } }
+
+    //*****************************************************
+    //Plants
+
+    public bool UsePlant { get { return _environment.usePlant; } }
+
+    public Sprite PlantSprite { get { return _environment.plantSprite; } }
+
+    //*****************************************************
+    //Stuff
+
+    public GameObject AmbianceBackground { get { return _environment.ambiancePrefab; } }
 
     public Color WallColor { get { return _environment.wallColour; } }
 
     public Color WallShadowColor { get { return _environment.wallShadowColour; } }
 
     public Material AnchorMaterial { get { return _environment.anchorMaterial; } }
-
-    public Sprite PlantSprite { get { return _environment.plantSprite; } }
 
     public Sprite UIImage { get { return _environment.uiImage; } }
 
@@ -616,17 +635,21 @@ public class EnvironmentInfo
     public float rockSpawnOffset;
     public GameObject rockPrefab;
     [Header("Background")]
-    public bool useBackgroundSprite;
-    public Sprite backgroundSprite;
-    public GameObject cameraBackgroundPrefab;
-    public Material backgroundMaterial;
+    public bool useBgSprite;
+    public Sprite bgSprite;
+    public GameObject cameraBgPrefab;
+    public Material bgMaterial;
+    [Header("Crevasse")]
+    public bool useCrevasse;
+    public Color crevasseColour;
+    [Header("Plant")]
+    public bool usePlant;
+    public Sprite plantSprite;
     [Header("Stuff")]
     public GameObject ambiancePrefab;
-    public Color crevasseColour;
     public Color wallColour;
     public Color wallShadowColour;
     public Material anchorMaterial;
-    public Sprite plantSprite;
     public Sprite uiImage;
     public AudioClip music;
 }
