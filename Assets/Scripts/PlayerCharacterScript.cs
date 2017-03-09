@@ -104,7 +104,7 @@ public class PlayerCharacterScript : MonoBehaviour
             GetComponent<AudioSource>().Play();
             _isDead = true;
 
-            Invoke("ReloadScene", 0.2f);
+            Invoke("ReloadScene", 0f);
             return;
         }
 
