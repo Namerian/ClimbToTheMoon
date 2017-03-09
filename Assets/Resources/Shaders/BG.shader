@@ -9,15 +9,19 @@ Shader "Shader Forge/BG" {
         _Color ("Color", Color) = (0.5,0.5,0.5,1)
         _scale ("scale", Range(0, 1)) = 0
     }
-    SubShader {
+     SubShader {
         Tags {
-            "RenderType"="Opaque"
+            "Queue"="Transparent"
+            "RenderType"="Transparent"
         }
         Pass {
+       		ZTest Off
+       		Blend SrcAlpha OneMinusSrcAlpha
             Name "FORWARD"
             Tags {
                 "LightMode"="ForwardBase"
             }
+            ZWrite On
             
             
             CGPROGRAM
