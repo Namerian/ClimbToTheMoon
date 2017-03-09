@@ -101,6 +101,11 @@ public class CameraScript : MonoBehaviour
         this.transform.Translate(cameraTranslation);
     }
 
+    void OnDestroy()
+    {
+        EventManager.Instance.OnAnchorGrabbedEvent -= OnAnchorGrabbedEvent;
+    }
+
     //==========================================================================================
     //
     //==========================================================================================
