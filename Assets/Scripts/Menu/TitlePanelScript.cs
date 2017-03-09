@@ -6,11 +6,22 @@ using UnityEngine.EventSystems;
 
 public class TitlePanelScript : MonoBehaviour, IMenuPanel
 {
+    [SerializeField]
+    private List<TitleObjectListElement> _titleObjects;
+
+    //=====================================================================================
+    //
+    //=====================================================================================
+
     private MenuScript _menu;
 
     private CanvasGroup _canvasGroup;
 
     private bool _active;
+
+    //=====================================================================================
+    //
+    //=====================================================================================
 
     void Awake()
     {
@@ -21,11 +32,27 @@ public class TitlePanelScript : MonoBehaviour, IMenuPanel
         _canvasGroup.blocksRaycasts = false;
     }
 
-    // Update is called once per frame
-    /*void Update()
+    void Start()
     {
+        GameObject titleObject = null;
+        int level = GameManagerScript.Instance.ComputeLevel(GameManagerScript.Instance.TotalScore);
 
-    }*/
+        foreach(TitleObjectListElement element in _titleObjects)
+        {
+            if(level >= element.level)
+            {
+                titleObject = element.titleObject;
+            }
+
+            element.titleObject.SetActive(false);
+        }
+
+        titleObject.SetActive(true);
+    }
+
+    //=====================================================================================
+    //
+    //=====================================================================================
 
     public void OnEnter()
     {
@@ -49,9 +76,12 @@ public class TitlePanelScript : MonoBehaviour, IMenuPanel
         }
     }
 
+    //=====================================================================================
+    //
+    //=====================================================================================
+
     public void OnPlayButton()
     {
-        //Debug.Log("TitlePanel: OnPlayButton!");
         _menu.SwitchPanel(_menu.LevelSelectionPanel);
     }
 
@@ -68,4 +98,11 @@ public class TitlePanelScript : MonoBehaviour, IMenuPanel
 		Application.Quit ();
         #endif
     }
+}
+
+[System.Serializable]
+public class TitleObjectListElement
+{
+    public int level;
+    public GameObject titleObject;
 }

@@ -162,6 +162,8 @@ public class GameManagerScript : MonoBehaviour
 
     public Sprite BackgroundSprite { get { return _environment.backgroundSprite; } }
 
+    public Material BackgroundMaterial { get { return _environment.backgroundMaterial; } }
+
     public GameObject AmbianceBackground { get { return _environment.ambiancePrefab; } }
 
     public Color CrevasseColor { get { return _environment.crevasseColour; } }
@@ -539,6 +541,7 @@ public class EnvironmentInfo
     public float rockSpawnOffset;
     public GameObject rockPrefab;
     public Sprite backgroundSprite;
+    public Material backgroundMaterial;
     public GameObject ambiancePrefab;
     public Color crevasseColour;
     public Color wallColour;
