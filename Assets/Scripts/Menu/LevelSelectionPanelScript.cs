@@ -19,7 +19,7 @@ public class LevelSelectionPanelScript : MonoBehaviour, IMenuPanel
 
     private CanvasGroup _canvasGroup;
     private CanvasGroup _loadingPanelCanvasGroup;
-    private Dictionary<string,Outline> _characterButtonOutlines = new Dictionary<string, Outline>();
+    private Dictionary<string, Outline> _characterButtonOutlines = new Dictionary<string, Outline>();
 
     private Scrollbar _stageScrollbar;
     private Scrollbar _characterScrollbar;
@@ -81,7 +81,7 @@ public class LevelSelectionPanelScript : MonoBehaviour, IMenuPanel
                 }
             }
 
-            if(numOfActiveButtons > 3)
+            if (numOfActiveButtons > 3)
             {
                 _stageScrollbar.value = 0;
             }
@@ -91,28 +91,16 @@ public class LevelSelectionPanelScript : MonoBehaviour, IMenuPanel
             }
 
             //*****
-            numOfActiveButtons = 0;
-
             foreach (ButtonListElement element in _characterButtons)
             {
                 if (level + 1 >= element.level)
                 {
                     element.button.interactable = true;
-                    numOfActiveButtons++;
                 }
                 else
                 {
                     element.button.interactable = false;
                 }
-            }
-
-            if (numOfActiveButtons > 3)
-            {
-                _characterScrollbar.value = 1;
-            }
-            else
-            {
-                _characterScrollbar.value = 0;
             }
 
             //*****
@@ -123,6 +111,28 @@ public class LevelSelectionPanelScript : MonoBehaviour, IMenuPanel
             else
             {
                 OnCharacterButton(GameManagerScript.Instance.CharacterName);
+            }
+
+            //*****
+            int selectedCharButtonIndex = 0;
+
+            for (int i = 0; i < _characterButtons.Count; i++)
+            {
+                ButtonListElement element = _characterButtons[i];
+
+                if (GameManagerScript.Instance.CharacterName == element.name)
+                {
+                    selectedCharButtonIndex = i;
+                }
+            }
+
+            if (selectedCharButtonIndex >= 3)
+            {
+                _characterScrollbar.value = 1;
+            }
+            else
+            {
+                _characterScrollbar.value = 0;
             }
         }
     }
@@ -166,9 +176,9 @@ public class LevelSelectionPanelScript : MonoBehaviour, IMenuPanel
     {
         GameManagerScript.Instance.CharacterName = name;
 
-        foreach(KeyValuePair<string,Outline> pair in _characterButtonOutlines)
+        foreach (KeyValuePair<string, Outline> pair in _characterButtonOutlines)
         {
-            if(pair.Key == name)
+            if (pair.Key == name)
             {
                 pair.Value.enabled = true;
             }
