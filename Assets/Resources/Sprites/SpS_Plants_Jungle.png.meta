@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: f5878b1e76d1acc46894b292c8ecb120
-timeCreated: 1489002869
+timeCreated: 1489007681
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -42,7 +42,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 45
+  spritePixelsToUnits: 60
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -83,25 +83,12 @@ TextureImporter:
       name: SpS_Plants_Jungle_0
       rect:
         serializedVersion: 2
-        x: 12
-        y: 124
-        width: 224
-        height: 242
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SpS_Plants_Jungle_1
-      rect:
-        serializedVersion: 2
-        x: 294
-        y: 116
-        width: 178
-        height: 203
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 148
+        y: 136
+        width: 216
+        height: 244
+      alignment: 9
+      pivot: {x: 0.5165384, y: 0.6317651}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

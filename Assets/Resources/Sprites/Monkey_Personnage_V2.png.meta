@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: da41a701229f1ca43b71829ab02cab6d
-timeCreated: 1488978838
+timeCreated: 1489007354
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -89,9 +89,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 688
-        width: 692
-        height: 336
+        y: 650
+        width: 702
+        height: 374
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -101,12 +101,12 @@ TextureImporter:
       name: Monkey_Personnage_V2_1
       rect:
         serializedVersion: 2
-        x: 752
+        x: 726
         y: 724
-        width: 204
+        width: 267
         height: 244
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -114,12 +114,12 @@ TextureImporter:
       name: Monkey_Personnage_V2_2
       rect:
         serializedVersion: 2
-        x: 236
-        y: 408
-        width: 252
-        height: 232
+        x: 226
+        y: 400
+        width: 304
+        height: 252
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -127,12 +127,12 @@ TextureImporter:
       name: Monkey_Personnage_V2_3
       rect:
         serializedVersion: 2
-        x: 796
+        x: 797
         y: 500
-        width: 116
+        width: 152
         height: 196
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -140,12 +140,12 @@ TextureImporter:
       name: Monkey_Personnage_V2_5
       rect:
         serializedVersion: 2
-        x: 804
+        x: 796
         y: 0
-        width: 108
+        width: 153
         height: 492
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -155,7 +155,7 @@ TextureImporter:
         serializedVersion: 2
         x: 229
         y: 0
-        width: 269
+        width: 298
         height: 243
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -166,10 +166,10 @@ TextureImporter:
       name: Monkey_Personnage_V2_6
       rect:
         serializedVersion: 2
-        x: 191
-        y: 247
-        width: 378
-        height: 118
+        x: 157
+        y: 243
+        width: 454
+        height: 147
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

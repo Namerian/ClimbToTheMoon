@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 23f774b495b5eaf42aa5b2f2465f5f1d
-timeCreated: 1489002884
+timeCreated: 1489008133
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -83,25 +83,12 @@ TextureImporter:
       name: SpS_Plants_Ocean_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 100
-        width: 241
-        height: 312
+        x: 104
+        y: 60
+        width: 316
+        height: 452
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SpS_Plants_Ocean_1
-      rect:
-        serializedVersion: 2
-        x: 270
-        y: 89
-        width: 214
-        height: 87
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

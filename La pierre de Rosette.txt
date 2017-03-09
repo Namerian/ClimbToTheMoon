@@ -1,0 +1,20 @@
+océan :
+crevasses :475980FF
+BG = DFF0FFFF
+mur =5382DDFF
+ombre mur = 00166AAA
+
+Jungle
+crevasses = 92334DFF
+murs = BE536DFF
+
+Montagne 
+creavsse =62393FFF
+murs = A85D5DFF
+bg =FFCECEFF
+
+ICE
+Crevasses = 358EBAFF
+murs = 55ADD3FF
+ombre mur = 0A596DDB
+
