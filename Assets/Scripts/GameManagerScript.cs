@@ -178,6 +178,8 @@ public class GameManagerScript : MonoBehaviour
 
     public Sprite UIImage { get { return _environment.uiImage; } }
 
+    public AudioClip StageMusic { get { return _environment.music; } }
+
     //==========================================================================================
     //
     //==========================================================================================
@@ -483,7 +485,7 @@ public class GameManagerScript : MonoBehaviour
         ChallengeInfo challengeInfo = _challengeList[Random.Range(0, _challengeList.Count - 1)];
         int x = Random.Range(challengeInfo.minXValue, challengeInfo.maxXValue);
         int level = ComputeLevel(TotalScore);
-        int score = (int)(x * level * challengeInfo.multiplier * _challengeScoreMultiplierByLevel[level]);
+        int score = (int)(x * (level+1) * challengeInfo.multiplier * _challengeScoreMultiplierByLevel[level]);
 
         switch (challengeInfo.name)
         {
@@ -561,6 +563,7 @@ public class EnvironmentInfo
     public Material anchorMaterial;
     public Sprite plantSprite;
     public Sprite uiImage;
+    public AudioClip music;
 }
 
 [System.Serializable]
