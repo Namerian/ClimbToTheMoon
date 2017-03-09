@@ -1,17 +1,15 @@
 fileFormatVersion: 2
-guid: ef547a9c4dcd19349bd26594346422da
-timeCreated: 1489073912
+guid: fd4122c266415df43bcb5ef8dec93983
+timeCreated: 1489073371
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
-    21300000: T_Prises_0
-    21300002: T_Prises_1
-    21300004: T_Prises_2
-    21300006: T_Prises_3
-    21300008: T_Prises_4
-    21300010: T_Prises_5
-    21300012: T_Prises_6
-    21300014: T_Prises_7
+    21300000: Grip_All_0
+    21300002: Grip_All_1
+    21300004: Grip_All_2
+    21300006: Grip_All_3
+    21300008: Grip_All_4
+    21300010: Grip_All_5
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -48,7 +46,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 120
+  spritePixelsToUnits: 100
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -86,91 +84,78 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: T_Prises_0
+      name: Grip_All_0
       rect:
         serializedVersion: 2
-        x: 59
-        y: 268
-        width: 200
-        height: 210
+        x: 57
+        y: 680
+        width: 331
+        height: 340
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: T_Prises_1
+      name: Grip_All_1
       rect:
         serializedVersion: 2
-        x: 289
-        y: 179
-        width: 219
-        height: 195
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: T_Prises_2
-      rect:
-        serializedVersion: 2
-        x: 575
-        y: 268
-        width: 191
-        height: 206
+        x: 584
+        y: 687
+        width: 332
+        height: 337
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: T_Prises_3
+      name: Grip_All_2
       rect:
         serializedVersion: 2
-        x: 836
-        y: 273
-        width: 189
-        height: 196
+        x: 33
+        y: 331
+        width: 327
+        height: 345
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: T_Prises_5
+      name: Grip_All_3
       rect:
         serializedVersion: 2
-        x: 54
-        y: 14
-        width: 206
-        height: 212
+        x: 553
+        y: 0
+        width: 324
+        height: 336
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: T_Prises_6
+      name: Grip_All_4
       rect:
         serializedVersion: 2
-        x: 571
-        y: 30
-        width: 185
-        height: 206
+        x: 566
+        y: 340
+        width: 334
+        height: 342
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: T_Prises_7
+      name: Grip_All_5
       rect:
         serializedVersion: 2
-        x: 832
-        y: 32
-        width: 190
-        height: 202
+        x: 22
+        y: 0
+        width: 348
+        height: 332
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

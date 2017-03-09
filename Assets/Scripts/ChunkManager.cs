@@ -16,9 +16,6 @@ public class ChunkManager : MonoBehaviour
     [SerializeField]
     private GameObject _startChunk;
 
-    /*[SerializeField]
-    private GameObject _rockPrefab;*/
-
     [SerializeField]
     private GameObject _warningPrefab;
 
@@ -29,15 +26,6 @@ public class ChunkManager : MonoBehaviour
 
     [SerializeField]
     private float _chunkSpawnOffsetInterval = 0.2f;
-
-    /*[SerializeField]
-    private float _minRockSpawnTimer = 2f;*/
-
-    /*[SerializeField]
-    private float _maxRockRespawnTimer = 6f;*/
-
-    /*[SerializeField]
-    private float _rockSpawnOffset = 6f;*/
 
     //======================================================
     //
@@ -59,9 +47,12 @@ public class ChunkManager : MonoBehaviour
 
         _chunks.Add(_startChunk.GetComponent<ChunkScript>());
 
-        GameObject newBackground = Instantiate<GameObject>(_backgroundPrefab, this.transform);
-        ChunkScript bgScript = newBackground.GetComponent<ChunkScript>();
-        _backgrounds.Add(bgScript);
+        if (GameManagerScript.Instance.UseBackgroundSprite)
+        {
+            GameObject newBackground = Instantiate<GameObject>(_backgroundPrefab, this.transform);
+            ChunkScript bgScript = newBackground.GetComponent<ChunkScript>();
+            _backgrounds.Add(bgScript);
+        }
 
         //**********************************
 
@@ -96,14 +87,13 @@ public class ChunkManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //**********************************************
-        // chunk spawning
-
         Camera camera = Camera.main;
 
         float cameraUpperYPos = camera.transform.position.y + camera.orthographicSize;
         float chunksUpperYPos = _chunks[_chunks.Count - 1].TopPosition.y;
 
+        //**********************************************
+        // chunk spawning
         if (cameraUpperYPos + 1 >= chunksUpperYPos)
         {
             int randomIndex = Random.Range(0, _chunkPrefabs.Count - 1);
@@ -118,20 +108,23 @@ public class ChunkManager : MonoBehaviour
             _chunks.Add(newChunkScript);
         }
 
+
         //**********************************************
         // bg spawning
-
-        float bgsUpperYPos = _backgrounds[_backgrounds.Count - 1].TopPosition.y;
-
-        if (cameraUpperYPos + 1 >= bgsUpperYPos)
+        if (GameManagerScript.Instance.UseBackgroundSprite)
         {
-            GameObject newBackground = Instantiate<GameObject>(_backgroundPrefab, this.transform);
-            ChunkScript bgScript = newBackground.GetComponent<ChunkScript>();
+            float bgsUpperYPos = _backgrounds[_backgrounds.Count - 1].TopPosition.y;
 
-            float newBackgroundHalfHeight = Mathf.Abs(bgScript.BottomPosition.y - bgScript.transform.position.y);
-            newBackground.transform.position = new Vector3(0, bgsUpperYPos + newBackgroundHalfHeight);
+            if (cameraUpperYPos + 1 >= bgsUpperYPos)
+            {
+                GameObject newBackground = Instantiate<GameObject>(_backgroundPrefab, this.transform);
+                ChunkScript bgScript = newBackground.GetComponent<ChunkScript>();
 
-            _backgrounds.Add(bgScript);
+                float newBackgroundHalfHeight = Mathf.Abs(bgScript.BottomPosition.y - bgScript.transform.position.y);
+                newBackground.transform.position = new Vector3(0, bgsUpperYPos + newBackgroundHalfHeight);
+
+                _backgrounds.Add(bgScript);
+            }
         }
 
         //**********************************************
@@ -149,14 +142,16 @@ public class ChunkManager : MonoBehaviour
 
         //**********************************************
         // bg despawning
-
-        ChunkScript oldestBg = _backgrounds[0];
-        float oldestBgTopYPos = oldestBg.TopPosition.y;
-
-        if (cameraBottomYPos > oldestBgTopYPos)
+        if (GameManagerScript.Instance.UseBackgroundSprite)
         {
-            _backgrounds.Remove(oldestBg);
-            Destroy(oldestBg.gameObject);
+            ChunkScript oldestBg = _backgrounds[0];
+            float oldestBgTopYPos = oldestBg.TopPosition.y;
+
+            if (cameraBottomYPos > oldestBgTopYPos)
+            {
+                _backgrounds.Remove(oldestBg);
+                Destroy(oldestBg.gameObject);
+            }
         }
     }
 
@@ -169,7 +164,7 @@ public class ChunkManager : MonoBehaviour
         float halfScreenWidth = ((Camera.main.orthographicSize * 2) / Camera.main.pixelHeight) * Camera.main.pixelWidth * 0.5f;
 
         float yPos = Camera.main.transform.position.y + Camera.main.orthographicSize + GameManagerScript.Instance.RockSpawnOffset;
-        float xPos = Random.Range(Camera.main.transform.position.x-halfScreenWidth, Camera.main.transform.position.x+halfScreenWidth);
+        float xPos = Random.Range(Camera.main.transform.position.x - halfScreenWidth, Camera.main.transform.position.x + halfScreenWidth);
 
         //Debug.Log("Spawning Rock, xPos=" + xPos);
 
