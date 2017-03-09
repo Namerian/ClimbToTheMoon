@@ -7,6 +7,11 @@ public class AmbianceBgScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Instantiate(GameManagerScript.Instance.AmbianceBackground, this.transform);
+        GameObject ambianceBg = GameManagerScript.Instance.AmbianceBackground;
+
+        if (ambianceBg != null)
+        {
+            Instantiate(ambianceBg, this.transform);
+        }
     }
 }
