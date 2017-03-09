@@ -271,13 +271,14 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
         toShow.SetActive(true);
     }
 
-    public void OnChangeChallengeButton()
+    public void OnChangeChallengeButton(Button button)
     {
         if (!_challengeChanged)
         {
             GameManagerScript.Instance.ChangeChallenge();
             _challengeCompleted.SetActive(false);
             UpdateChallengePanel();
+            button.interactable = false;
             _challengeChanged = true;
         }
     }
