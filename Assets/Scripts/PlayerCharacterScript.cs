@@ -125,6 +125,7 @@ public class PlayerCharacterScript : MonoBehaviour
             }
 
             _anchoringAllowed = false;
+            _levitationTimer = 0;
 
             Invoke("AllowAnchoring", 0.5f);
         }
