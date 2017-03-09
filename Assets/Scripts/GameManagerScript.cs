@@ -162,6 +162,8 @@ public class GameManagerScript : MonoBehaviour
 
     public Sprite BackgroundSprite { get { return _environment.backgroundSprite; } }
 
+    public Material BackgroundMaterial { get { return _environment.backgroundMaterial; } }
+
     public GameObject AmbianceBackground { get { return _environment.ambiancePrefab; } }
 
     public Color CrevasseColor { get { return _environment.crevasseColour; } }
@@ -243,16 +245,17 @@ public class GameManagerScript : MonoBehaviour
         }
 
         //**************************************************************
+        //Update PlayerPrefs
+        PlayerPrefs.SetInt("TotalScore", TotalScore);
+        PlayerPrefs.SetInt("BestSessionScore", BestSessionScore);
+        PlayerPrefs.SetInt("ChallengeCurrent", _challenge.Current);
+
+        //**************************************************************
         // Send Amplitude LevelUp event
         if (newLevel > oldLevel && newLevel % 5 == 0)
         {
             AmplitudeHelper.Instance.LogEvent("lvl " + newLevel + " reached");
         }
-
-        //**************************************************************
-        //Update PlayerPrefs
-        PlayerPrefs.SetInt("TotalScore", TotalScore);
-        PlayerPrefs.SetInt("BestSessionScore", BestSessionScore);
 
         //**************************************************************
         //Send Amplitude StageEnd event
@@ -267,10 +270,6 @@ public class GameManagerScript : MonoBehaviour
         };
 
         AmplitudeHelper.Instance.LogEvent("Stage End", customProperties);
-
-        //**************************************************************
-        //Update Challenge PlayerPrefs
-        PlayerPrefs.SetInt("ChallengeCurrent", _challenge.Current);
 
         //**************************************************************
         //Load Menu scene
@@ -542,6 +541,7 @@ public class EnvironmentInfo
     public float rockSpawnOffset;
     public GameObject rockPrefab;
     public Sprite backgroundSprite;
+    public Material backgroundMaterial;
     public GameObject ambiancePrefab;
     public Color crevasseColour;
     public Color wallColour;

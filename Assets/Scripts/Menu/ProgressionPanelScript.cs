@@ -11,9 +11,14 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
     [SerializeField]
     private List<RewardListElement> _rewardButtons;
 
+    //==========================================================================================
+    //
+    //==========================================================================================
+
     private MenuScript _menu;
 
     private CanvasGroup _canvasGroup;
+    private AudioSource _audioSource;
 
     private Text _lastSessionScoreText;
     private Text _bestSessionScoreText;
@@ -45,6 +50,7 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
     {
         _menu = this.transform.parent.GetComponent<MenuScript>();
         _canvasGroup = GetComponent<CanvasGroup>();
+        _audioSource = GetComponent<AudioSource>();
 
         _lastSessionScoreText = this.transform.Find("LevelPanel/LastSessionScoreText").GetComponent<Text>();
         _bestSessionScoreText = this.transform.Find("LevelPanel/BestSessionScoreText").GetComponent<Text>();
@@ -89,6 +95,7 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
 
                 UpdateLevelText(_currentLevel);
                 UpdateRewardButtons(_currentLevel);
+                _audioSource.Play();
             }
 
             if(_currentLevel == GameManagerScript.Instance.MaxLevel)

@@ -76,6 +76,11 @@ public class UIManager : MonoBehaviour
         scoreText.text = ((int)_score).ToString();
     }
 
+    void OnDestroy()
+    {
+        EventManager.Instance.OnAnchorGrabbedEvent -= OnAnchorGrabbedEvent;
+    }
+
     //==========================================================================================
     //
     //==========================================================================================

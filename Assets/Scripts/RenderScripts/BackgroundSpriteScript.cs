@@ -9,8 +9,14 @@ public class BackgroundSpriteScript : MonoBehaviour
     void Start()
     {
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();
-        Sprite sprite = GameManagerScript.Instance.BackgroundSprite;
 
-        renderer.sprite = sprite;
+        renderer.sprite = GameManagerScript.Instance.BackgroundSprite;
+        
+        Material mat = GameManagerScript.Instance.BackgroundMaterial;
+
+        if(mat!= null)
+        {
+            renderer.material = mat;
+        }
     }
 }
