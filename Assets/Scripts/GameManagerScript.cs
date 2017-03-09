@@ -243,16 +243,17 @@ public class GameManagerScript : MonoBehaviour
         }
 
         //**************************************************************
+        //Update PlayerPrefs
+        PlayerPrefs.SetInt("TotalScore", TotalScore);
+        PlayerPrefs.SetInt("BestSessionScore", BestSessionScore);
+        PlayerPrefs.SetInt("ChallengeCurrent", _challenge.Current);
+
+        //**************************************************************
         // Send Amplitude LevelUp event
         if (newLevel > oldLevel && newLevel % 5 == 0)
         {
             AmplitudeHelper.Instance.LogEvent("lvl " + newLevel + " reached");
         }
-
-        //**************************************************************
-        //Update PlayerPrefs
-        PlayerPrefs.SetInt("TotalScore", TotalScore);
-        PlayerPrefs.SetInt("BestSessionScore", BestSessionScore);
 
         //**************************************************************
         //Send Amplitude StageEnd event
@@ -267,10 +268,6 @@ public class GameManagerScript : MonoBehaviour
         };
 
         AmplitudeHelper.Instance.LogEvent("Stage End", customProperties);
-
-        //**************************************************************
-        //Update Challenge PlayerPrefs
-        PlayerPrefs.SetInt("ChallengeCurrent", _challenge.Current);
 
         //**************************************************************
         //Load Menu scene
