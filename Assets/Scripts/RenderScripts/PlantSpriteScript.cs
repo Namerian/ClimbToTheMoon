@@ -8,12 +8,19 @@ public class PlantSpriteScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
-        Sprite sprite = GameManagerScript.Instance.PlantSprite;
-
-        if (sprite != null)
+        if (!GameManagerScript.Instance.UsePlant)
         {
-            renderer.sprite = sprite;
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+            Sprite sprite = GameManagerScript.Instance.PlantSprite;
+
+            if (sprite != null)
+            {
+                renderer.sprite = sprite;
+            }
         }
     }
 }
