@@ -21,6 +21,9 @@ public class LevelSelectionPanelScript : MonoBehaviour, IMenuPanel
     private CanvasGroup _loadingPanelCanvasGroup;
     private Dictionary<string,Outline> _characterButtonOutlines = new Dictionary<string, Outline>();
 
+    private Scrollbar _stageScrollbar;
+    private Scrollbar _characterScrollbar;
+
     private bool _active;
 
     //==========================================================================================
@@ -38,6 +41,9 @@ public class LevelSelectionPanelScript : MonoBehaviour, IMenuPanel
         }
 
         _loadingPanelCanvasGroup = this.transform.Find("PanelLoading").GetComponent<CanvasGroup>();
+
+        _stageScrollbar = this.transform.Find("PanelNiveaux/ScrollViewStages/Scrollbar Vertical").GetComponent<Scrollbar>();
+        _characterScrollbar = this.transform.Find("PanelPersos/ScrollViewCharacters/ScrollbarHorizontal").GetComponent<Scrollbar>();
 
         _canvasGroup.alpha = 0;
         _canvasGroup.interactable = false;
@@ -59,23 +65,40 @@ public class LevelSelectionPanelScript : MonoBehaviour, IMenuPanel
 
             int level = GameManagerScript.Instance.ComputeLevel(GameManagerScript.Instance.TotalScore);
 
+            //*****
+            int numOfActiveButtons = 0;
+
             foreach (ButtonListElement element in _stageButtons)
             {
                 if (level + 1 >= element.level)
                 {
                     element.button.interactable = true;
+                    numOfActiveButtons++;
                 }
                 else
                 {
                     element.button.interactable = false;
                 }
             }
+
+            if(numOfActiveButtons > 3)
+            {
+                _stageScrollbar.value = 0;
+            }
+            else
+            {
+                _stageScrollbar.value = 1;
+            }
+
+            //*****
+            numOfActiveButtons = 0;
 
             foreach (ButtonListElement element in _characterButtons)
             {
                 if (level + 1 >= element.level)
                 {
                     element.button.interactable = true;
+                    numOfActiveButtons++;
                 }
                 else
                 {
@@ -83,6 +106,16 @@ public class LevelSelectionPanelScript : MonoBehaviour, IMenuPanel
                 }
             }
 
+            if (numOfActiveButtons > 3)
+            {
+                _characterScrollbar.value = 1;
+            }
+            else
+            {
+                _characterScrollbar.value = 0;
+            }
+
+            //*****
             if (GameManagerScript.Instance.CharacterName == null)
             {
                 OnCharacterButton("Poulpe");
