@@ -111,7 +111,7 @@ public class PlayerCharacterScript : MonoBehaviour
         //******************************************
         if (_numOfAnchoredExtremities == 0)
         {
-            _levitationTimer += Time.fixedDeltaTime;
+            _levitationTimer += Time.deltaTime;
         }
 
         if (_levitationTimer > 1f)
