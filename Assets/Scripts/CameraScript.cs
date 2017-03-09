@@ -49,6 +49,11 @@ public class CameraScript : MonoBehaviour
             audioSource.clip = music;
             audioSource.Play();
         }
+
+        if (!GameManagerScript.Instance.UseBackgroundSprite && GameManagerScript.Instance.CameraBackgroundPrefab != null)
+        {
+            Instantiate(GameManagerScript.Instance.CameraBackgroundPrefab, this.transform);
+        }
     }
 
     // Update is called once per frame

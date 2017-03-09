@@ -8,15 +8,18 @@ public class BackgroundSpriteScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
-
-        renderer.sprite = GameManagerScript.Instance.BackgroundSprite;
-        
-        Material mat = GameManagerScript.Instance.BackgroundMaterial;
-
-        if(mat!= null)
+        if (GameManagerScript.Instance.UseBackgroundSprite)
         {
-            renderer.material = mat;
+            SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+
+            renderer.sprite = GameManagerScript.Instance.BackgroundSprite;
+
+            Material mat = GameManagerScript.Instance.BackgroundMaterial;
+
+            if (mat != null)
+            {
+                renderer.material = mat;
+            }
         }
     }
 }

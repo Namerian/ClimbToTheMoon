@@ -148,6 +148,11 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
+    public List<GameObject> EnvironmentChunks { get { return _environment.uniqueChunks; } }
+
+    //*****************************************************
+    //Rocks
+
     public bool SpawnRocks { get { return _environment.spawnRocks; } }
 
     public float MinRockSpawnTimer { get { return _environment.minRockSpawnTimer; } }
@@ -158,23 +163,41 @@ public class GameManagerScript : MonoBehaviour
 
     public GameObject RockPrefab { get { return _environment.rockPrefab; } }
 
-    public List<GameObject> EnvironmentChunks { get { return _environment.uniqueChunks; } }
+    //*****************************************************
+    //Background
 
-    public Sprite BackgroundSprite { get { return _environment.backgroundSprite; } }
+    public bool UseBackgroundSprite { get { return _environment.useBgSprite; } }
 
-    public Material BackgroundMaterial { get { return _environment.backgroundMaterial; } }
+    public Sprite BackgroundSprite { get { return _environment.bgSprite; } }
 
-    public GameObject AmbianceBackground { get { return _environment.ambiancePrefab; } }
+    public GameObject CameraBackgroundPrefab { get { return _environment.cameraBgPrefab; } }
+
+    public Material BackgroundMaterial { get { return _environment.bgMaterial; } }
+
+    //*****************************************************
+    //Crevasse
+
+    public bool UseCrevasse { get { return _environment.useCrevasse; } }
 
     public Color CrevasseColor { get { return _environment.crevasseColour; } }
+
+    //*****************************************************
+    //Plants
+
+    public bool UsePlant { get { return _environment.usePlant; } }
+
+    public Sprite PlantSprite { get { return _environment.plantSprite; } }
+
+    //*****************************************************
+    //Stuff
+
+    public GameObject AmbianceBackground { get { return _environment.ambiancePrefab; } }
 
     public Color WallColor { get { return _environment.wallColour; } }
 
     public Color WallShadowColor { get { return _environment.wallShadowColour; } }
 
     public Material AnchorMaterial { get { return _environment.anchorMaterial; } }
-
-    public Sprite PlantSprite { get { return _environment.plantSprite; } }
 
     public Sprite UIImage { get { return _environment.uiImage; } }
 
@@ -201,6 +224,60 @@ public class GameManagerScript : MonoBehaviour
         //**************************************************************
         //Send EventManager StageEnded event
         EventManager.Instance.SendOnStageEndedEvent((int)player.HighestAltitude, GameManagerScript.Instance.CharacterName);
+
+        //**************************************************************
+        //
+        ChallengeInfo challengeInfo = null;
+
+        foreach (ChallengeInfo info in _challengeList)
+        {
+            if (info.name == _challenge.Name)
+            {
+                challengeInfo = info;
+                break;
+            }
+        }
+
+        if (challengeInfo != null)
+        {
+            int level = ComputeLevel(TotalScore + SessionScore);
+            int score = (int)(_challenge.X * (level + 1) * challengeInfo.multiplier * _challengeScoreMultiplierByLevel[level]);
+            int x = _challenge.X;
+            int current = _challenge.Current;
+
+            if (score > _challenge.Score)
+            {
+                switch (_challenge.Name)
+                {
+                    case "ForeverAltitudeChallenge":
+                        _challenge = new ForeverAltitudeChallenge(x, score, current);
+                        break;
+                    case "ForeverAnchorChallenge":
+                        _challenge = new ForeverAnchorChallenge(x, score, current);
+                        break;
+                    case "ForeverMoonstoneChallenge":
+                        _challenge = new ForeverMoonstoneChallenge(x, score, current);
+                        break;
+                    case "ForeverRockChallenge":
+                        _challenge = new ForeverRockChallenge(x, score, current);
+                        break;
+                    case "StageAltitudeChallenge":
+                        _challenge = new StageAltitudeChallenge(x, score, current);
+                        break;
+                    case "StageAnchorChallenge":
+                        _challenge = new StageAnchorChallenge(x, score, current);
+                        break;
+                    case "StageMoonstoneChallenge":
+                        _challenge = new StageMoonstoneChallenge(x, score, current);
+                        break;
+                    case "CharacterChallenge":
+                        break;
+                    case "StageRockChallenge":
+                        _challenge = new StageRockChallenge(x, score, current);
+                        break;
+                }
+            }
+        }
 
         //**************************************************************
         //Update Score
@@ -237,9 +314,9 @@ public class GameManagerScript : MonoBehaviour
         //**************************************************************
         //Clamp Score
         int totalPossibleScore = 0;
-        foreach (int x in _levelExperience)
+        foreach (int aaa in _levelExperience)
         {
-            totalPossibleScore += x;
+            totalPossibleScore += aaa;
         }
         if (TotalScore > totalPossibleScore)
         {
@@ -250,7 +327,9 @@ public class GameManagerScript : MonoBehaviour
         //Update PlayerPrefs
         PlayerPrefs.SetInt("TotalScore", TotalScore);
         PlayerPrefs.SetInt("BestSessionScore", BestSessionScore);
+
         PlayerPrefs.SetInt("ChallengeCurrent", _challenge.Current);
+        PlayerPrefs.SetInt("ChallengeScore", _challenge.Score);
 
         //**************************************************************
         // Send Amplitude LevelUp event
@@ -350,9 +429,9 @@ public class GameManagerScript : MonoBehaviour
     {
         float result = 1;
 
-        foreach(AccelerationStepElement element in _environment.accelerationSteps)
+        foreach (AccelerationStepElement element in _environment.accelerationSteps)
         {
-            if(altitude >= element.height)
+            if (altitude >= element.height)
             {
                 result = element.scoreMultiplier;
             }
@@ -475,7 +554,7 @@ public class GameManagerScript : MonoBehaviour
             case "CharacterChallenge":
                 break;
             case "StageRockChallenge":
-                _challenge = new StageRockChallenge(x, score);
+                _challenge = new StageRockChallenge(x, score, current);
                 break;
         }
     }
@@ -485,7 +564,7 @@ public class GameManagerScript : MonoBehaviour
         ChallengeInfo challengeInfo = _challengeList[Random.Range(0, _challengeList.Count - 1)];
         int x = Random.Range(challengeInfo.minXValue, challengeInfo.maxXValue);
         int level = ComputeLevel(TotalScore);
-        int score = (int)(x * (level+1) * challengeInfo.multiplier * _challengeScoreMultiplierByLevel[level]);
+        int score = (int)(x * (level + 1) * challengeInfo.multiplier * _challengeScoreMultiplierByLevel[level]);
 
         switch (challengeInfo.name)
         {
@@ -549,19 +628,28 @@ public class EnvironmentInfo
     public string name;
     public List<GameObject> uniqueChunks;
     public List<AccelerationStepElement> accelerationSteps;
+    [Header("Rocks")]
     public bool spawnRocks;
     public float minRockSpawnTimer;
     public float maxRockSpawnTimer;
     public float rockSpawnOffset;
     public GameObject rockPrefab;
-    public Sprite backgroundSprite;
-    public Material backgroundMaterial;
-    public GameObject ambiancePrefab;
+    [Header("Background")]
+    public bool useBgSprite;
+    public Sprite bgSprite;
+    public GameObject cameraBgPrefab;
+    public Material bgMaterial;
+    [Header("Crevasse")]
+    public bool useCrevasse;
     public Color crevasseColour;
+    [Header("Plant")]
+    public bool usePlant;
+    public Sprite plantSprite;
+    [Header("Stuff")]
+    public GameObject ambiancePrefab;
     public Color wallColour;
     public Color wallShadowColour;
     public Material anchorMaterial;
-    public Sprite plantSprite;
     public Sprite uiImage;
     public AudioClip music;
 }
