@@ -203,6 +203,57 @@ public class GameManagerScript : MonoBehaviour
         EventManager.Instance.SendOnStageEndedEvent((int)player.HighestAltitude, GameManagerScript.Instance.CharacterName);
 
         //**************************************************************
+        //
+        ChallengeInfo challengeInfo = null;
+
+        foreach(ChallengeInfo info in _challengeList)
+        {
+            if(info.name == _challenge.Name)
+            {
+                challengeInfo = info;
+                break;
+            }
+        }
+
+        int level = ComputeLevel(TotalScore + SessionScore);
+        int score = (int)(_challenge.X * (level + 1) * challengeInfo.multiplier * _challengeScoreMultiplierByLevel[level]);
+        int x = _challenge.X;
+        int current = _challenge.Current;
+
+        if(score > _challenge.Score)
+        {
+            switch (_challenge.Name)
+            {
+                case "ForeverAltitudeChallenge":
+                    _challenge = new ForeverAltitudeChallenge(x, score, current);
+                    break;
+                case "ForeverAnchorChallenge":
+                    _challenge = new ForeverAnchorChallenge(x, score, current);
+                    break;
+                case "ForeverMoonstoneChallenge":
+                    _challenge = new ForeverMoonstoneChallenge(x, score, current);
+                    break;
+                case "ForeverRockChallenge":
+                    _challenge = new ForeverRockChallenge(x, score, current);
+                    break;
+                case "StageAltitudeChallenge":
+                    _challenge = new StageAltitudeChallenge(x, score, current);
+                    break;
+                case "StageAnchorChallenge":
+                    _challenge = new StageAnchorChallenge(x, score, current);
+                    break;
+                case "StageMoonstoneChallenge":
+                    _challenge = new StageMoonstoneChallenge(x, score, current);
+                    break;
+                case "CharacterChallenge":
+                    break;
+                case "StageRockChallenge":
+                    _challenge = new StageRockChallenge(x, score, current);
+                    break;
+            }
+        }
+
+        //**************************************************************
         //Update Score
         SessionScore = (int)UIManager.Instance.Score;
 
@@ -237,9 +288,9 @@ public class GameManagerScript : MonoBehaviour
         //**************************************************************
         //Clamp Score
         int totalPossibleScore = 0;
-        foreach (int x in _levelExperience)
+        foreach (int aaa in _levelExperience)
         {
-            totalPossibleScore += x;
+            totalPossibleScore += aaa;
         }
         if (TotalScore > totalPossibleScore)
         {
@@ -250,7 +301,9 @@ public class GameManagerScript : MonoBehaviour
         //Update PlayerPrefs
         PlayerPrefs.SetInt("TotalScore", TotalScore);
         PlayerPrefs.SetInt("BestSessionScore", BestSessionScore);
+
         PlayerPrefs.SetInt("ChallengeCurrent", _challenge.Current);
+        PlayerPrefs.SetInt("ChallengeScore", _challenge.Score);
 
         //**************************************************************
         // Send Amplitude LevelUp event
@@ -475,7 +528,7 @@ public class GameManagerScript : MonoBehaviour
             case "CharacterChallenge":
                 break;
             case "StageRockChallenge":
-                _challenge = new StageRockChallenge(x, score);
+                _challenge = new StageRockChallenge(x, score, current);
                 break;
         }
     }
