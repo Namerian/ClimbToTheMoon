@@ -11,8 +11,8 @@ Shader "Shader Forge/BG" {
     }
      SubShader {
         Tags {
-            "Queue"="Transparent"
-            "RenderType"="Transparent"
+           "Queue"="AlphaTest"
+            "RenderType"="TransparentCutout"
         }
         Pass {
        		ZTest Off

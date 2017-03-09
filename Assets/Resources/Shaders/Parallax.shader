@@ -15,8 +15,8 @@ Shader "Shader Forge/Parallax" {
     }
     SubShader {
         Tags {
-            "Queue"="Transparent"
-            "RenderType"="Transparent"
+            "Queue"="AlphaTest"
+            "RenderType"="TransparentCutout"
         }
         Pass {
        		ZTest Off

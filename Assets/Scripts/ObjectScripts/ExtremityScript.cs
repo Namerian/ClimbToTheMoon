@@ -29,7 +29,8 @@ public class ExtremityScript : MonoBehaviour
             {
                 _helpCircle = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/FX/P_GrabHelper"));
                 _helpCircle.transform.parent = this.transform;
-                _helpCircle2 = _helpCircle.transform.Find("P_GrabHelper2").gameObject;
+                _helpCircle2 = _helpCircle.transform.GetChild(0).GetChild(0).gameObject;
+                //_helpCircle2 = _helpCircle.transform.Find("P_GrabHelper2").gameObject;
 
                 Vector3 pos = this.transform.position;
                 //pos.z = -1;

@@ -29,7 +29,7 @@ Shader "Shader Forge/Galaxy" {
             #define UNITY_PASS_FORWARDBASE
             #include "UnityCG.cginc"
             #pragma multi_compile_fwdbase
-            #pragma only_renderers d3d9 d3d11 glcore gles 
+            #pragma only_renderers d3d9 d3d11 glcore gles gles3 d3d11_9x 
             #pragma target 3.0
             uniform float4 _TimeEditor;
             uniform float4 _Color;
@@ -52,8 +52,8 @@ Shader "Shader Forge/Galaxy" {
             float4 frag(VertexOutput i) : COLOR {
 ////// Lighting:
 ////// Emissive:
-                float4 node_6993 = _Time + _TimeEditor;
-                float node_8401_ang = node_6993.g;
+                float4 node_4671 = _Time + _TimeEditor;
+                float node_8401_ang = node_4671.g;
                 float node_8401_spd = 0.03;
                 float node_8401_cos = cos(node_8401_spd*node_8401_ang);
                 float node_8401_sin = sin(node_8401_spd*node_8401_ang);
