@@ -123,7 +123,7 @@ public class PlayerCharacterScript : MonoBehaviour
 
                 _isDragging = false;
             }
-            
+
             _anchoringAllowed = false;
 
             Invoke("AllowAnchoring", 0.5f);
@@ -217,8 +217,6 @@ public class PlayerCharacterScript : MonoBehaviour
 
                         if (collider.CompareTag("Anchor") && anchorScript.IsInUse == false)
                         {
-                            //Debug.Log("end of drag, anchored extremity");
-
                             _currentChunkName = anchorScript.transform.parent.parent.name;
 
                             _draggedExtremity.AnchorExtremity(anchorScript, _anchorBreakForce);
