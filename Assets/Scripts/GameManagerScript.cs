@@ -210,50 +210,53 @@ public class GameManagerScript : MonoBehaviour
         //
         ChallengeInfo challengeInfo = null;
 
-        foreach(ChallengeInfo info in _challengeList)
+        foreach (ChallengeInfo info in _challengeList)
         {
-            if(info.name == _challenge.Name)
+            if (info.name == _challenge.Name)
             {
                 challengeInfo = info;
                 break;
             }
         }
 
-        int level = ComputeLevel(TotalScore + SessionScore);
-        int score = (int)(_challenge.X * (level + 1) * challengeInfo.multiplier * _challengeScoreMultiplierByLevel[level]);
-        int x = _challenge.X;
-        int current = _challenge.Current;
-
-        if(score > _challenge.Score)
+        if (challengeInfo != null)
         {
-            switch (_challenge.Name)
+            int level = ComputeLevel(TotalScore + SessionScore);
+            int score = (int)(_challenge.X * (level + 1) * challengeInfo.multiplier * _challengeScoreMultiplierByLevel[level]);
+            int x = _challenge.X;
+            int current = _challenge.Current;
+
+            if (score > _challenge.Score)
             {
-                case "ForeverAltitudeChallenge":
-                    _challenge = new ForeverAltitudeChallenge(x, score, current);
-                    break;
-                case "ForeverAnchorChallenge":
-                    _challenge = new ForeverAnchorChallenge(x, score, current);
-                    break;
-                case "ForeverMoonstoneChallenge":
-                    _challenge = new ForeverMoonstoneChallenge(x, score, current);
-                    break;
-                case "ForeverRockChallenge":
-                    _challenge = new ForeverRockChallenge(x, score, current);
-                    break;
-                case "StageAltitudeChallenge":
-                    _challenge = new StageAltitudeChallenge(x, score, current);
-                    break;
-                case "StageAnchorChallenge":
-                    _challenge = new StageAnchorChallenge(x, score, current);
-                    break;
-                case "StageMoonstoneChallenge":
-                    _challenge = new StageMoonstoneChallenge(x, score, current);
-                    break;
-                case "CharacterChallenge":
-                    break;
-                case "StageRockChallenge":
-                    _challenge = new StageRockChallenge(x, score, current);
-                    break;
+                switch (_challenge.Name)
+                {
+                    case "ForeverAltitudeChallenge":
+                        _challenge = new ForeverAltitudeChallenge(x, score, current);
+                        break;
+                    case "ForeverAnchorChallenge":
+                        _challenge = new ForeverAnchorChallenge(x, score, current);
+                        break;
+                    case "ForeverMoonstoneChallenge":
+                        _challenge = new ForeverMoonstoneChallenge(x, score, current);
+                        break;
+                    case "ForeverRockChallenge":
+                        _challenge = new ForeverRockChallenge(x, score, current);
+                        break;
+                    case "StageAltitudeChallenge":
+                        _challenge = new StageAltitudeChallenge(x, score, current);
+                        break;
+                    case "StageAnchorChallenge":
+                        _challenge = new StageAnchorChallenge(x, score, current);
+                        break;
+                    case "StageMoonstoneChallenge":
+                        _challenge = new StageMoonstoneChallenge(x, score, current);
+                        break;
+                    case "CharacterChallenge":
+                        break;
+                    case "StageRockChallenge":
+                        _challenge = new StageRockChallenge(x, score, current);
+                        break;
+                }
             }
         }
 
@@ -407,9 +410,9 @@ public class GameManagerScript : MonoBehaviour
     {
         float result = 1;
 
-        foreach(AccelerationStepElement element in _environment.accelerationSteps)
+        foreach (AccelerationStepElement element in _environment.accelerationSteps)
         {
-            if(altitude >= element.height)
+            if (altitude >= element.height)
             {
                 result = element.scoreMultiplier;
             }
@@ -542,7 +545,7 @@ public class GameManagerScript : MonoBehaviour
         ChallengeInfo challengeInfo = _challengeList[Random.Range(0, _challengeList.Count - 1)];
         int x = Random.Range(challengeInfo.minXValue, challengeInfo.maxXValue);
         int level = ComputeLevel(TotalScore);
-        int score = (int)(x * (level+1) * challengeInfo.multiplier * _challengeScoreMultiplierByLevel[level]);
+        int score = (int)(x * (level + 1) * challengeInfo.multiplier * _challengeScoreMultiplierByLevel[level]);
 
         switch (challengeInfo.name)
         {
@@ -606,15 +609,18 @@ public class EnvironmentInfo
     public string name;
     public List<GameObject> uniqueChunks;
     public List<AccelerationStepElement> accelerationSteps;
+    [Header("Rocks")]
     public bool spawnRocks;
     public float minRockSpawnTimer;
     public float maxRockSpawnTimer;
     public float rockSpawnOffset;
     public GameObject rockPrefab;
+    [Header("Background")]
     public bool useBackgroundSprite;
     public Sprite backgroundSprite;
     public GameObject cameraBackgroundPrefab;
     public Material backgroundMaterial;
+    [Header("Stuff")]
     public GameObject ambiancePrefab;
     public Color crevasseColour;
     public Color wallColour;
