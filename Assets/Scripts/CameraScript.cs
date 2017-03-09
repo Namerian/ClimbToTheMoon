@@ -21,12 +21,17 @@ public class CameraScript : MonoBehaviour
     private Transform _playerTransform;
     private PlayerCharacterScript _playerScript;
 
-    private float _acceleration = 1;
+    private float _acceleration;
     private bool _started = false;
 
     //==========================================================================================
     // monobehaviour methods
     //==========================================================================================
+
+    void Awake()
+    {
+        EventManager.Instance.OnAnchorGrabbedEvent += OnAnchorGrabbedEvent;
+    }
 
     // Use this for initialization
     void Start()
@@ -34,10 +39,8 @@ public class CameraScript : MonoBehaviour
         _playerTransform = GameObject.FindGameObjectWithTag("Player").transform.Find("body");
         _playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCharacterScript>();
 
-        EventManager.Instance.OnAnchorGrabbedEvent += OnAnchorGrabbedEvent;
+        _acceleration = GameManagerScript.Instance.GetAccelerationStep(0);
     }
-
-
 
     // Update is called once per frame
     void FixedUpdate()

@@ -14,6 +14,11 @@ public class TutorialScript : MonoBehaviour
         EventManager.Instance.OnAnchorGrabbedEvent += OnAnchorGrabbedEvent;
     }
 
+    void OnDestroy()
+    {
+        EventManager.Instance.OnAnchorGrabbedEvent -= OnAnchorGrabbedEvent;
+    }
+
     private void OnAnchorGrabbedEvent()
     {
         EventManager.Instance.OnAnchorGrabbedEvent -= OnAnchorGrabbedEvent;
