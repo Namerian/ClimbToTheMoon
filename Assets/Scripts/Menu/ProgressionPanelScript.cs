@@ -33,6 +33,8 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
     private Text _challengeScoreText;
     private Text _challengeDescriptionText;
 
+    private Scrollbar _rewardScrollbar;
+
     private bool _active = false;
     private bool _updated = false;
     private bool _updating = false;
@@ -68,6 +70,8 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
         _challengeCompleted = this.transform.Find("ChallengePanel/UpperLine/ChallengeCompleted").gameObject;
         _challengeScoreText = this.transform.Find("ChallengePanel/UpperLine/ChallengeScoreText").GetComponent<Text>();
         _challengeDescriptionText = this.transform.Find("ChallengePanel/ChallengeDescriptionText").GetComponent<Text>();
+
+        _rewardScrollbar = this.transform.Find("RewardPanel/Scroll View/Scrollbar Vertical").GetComponent<Scrollbar>();
 
         _canvasGroup.alpha = 0;
         _canvasGroup.interactable = false;
@@ -122,6 +126,15 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
             {
                 _updated = true;
                 _updating = false;
+
+                if(_currentLevel >= 27)
+                {
+                    _rewardScrollbar.value = 0;
+                }
+                else
+                {
+                    _rewardScrollbar.value = 1;
+                }
             }
         }
     }
@@ -192,6 +205,15 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
                     Debug.Log("slider update: current level score = " + _currentLevelScore + ";  next level = " + _nextLevelRequiredScore + ";  slider fill = " + sliderFill);
                     _levelSlider.value = sliderFill;
                 }
+
+                if (_currentLevel >= 27)
+                {
+                    _rewardScrollbar.value = 0;
+                }
+                else
+                {
+                    _rewardScrollbar.value = 1;
+                }
             }
 
             UpdateLevelText(_currentLevel);
@@ -249,13 +271,14 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
         toShow.SetActive(true);
     }
 
-    public void OnChangeChallengeButton()
+    public void OnChangeChallengeButton(Button button)
     {
         if (!_challengeChanged)
         {
             GameManagerScript.Instance.ChangeChallenge();
             _challengeCompleted.SetActive(false);
             UpdateChallengePanel();
+            button.interactable = false;
             _challengeChanged = true;
         }
     }
