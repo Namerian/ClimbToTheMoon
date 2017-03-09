@@ -40,6 +40,15 @@ public class CameraScript : MonoBehaviour
         _playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCharacterScript>();
 
         _acceleration = GameManagerScript.Instance.GetAccelerationStep(0);
+
+        AudioClip music = GameManagerScript.Instance.StageMusic;
+
+        if(music != null)
+        {
+            AudioSource audioSource = this.transform.Find("Music").GetComponent<AudioSource>();
+            audioSource.clip = music;
+            audioSource.Play();
+        }
     }
 
     // Update is called once per frame
