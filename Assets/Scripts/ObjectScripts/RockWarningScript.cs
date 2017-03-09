@@ -16,7 +16,7 @@ public class RockWarningScript : MonoBehaviour
 
         float yPos = Camera.main.transform.position.y + Camera.main.orthographicSize - 0.5f;
 
-        this.transform.position = new Vector3(_rock.transform.position.x, yPos, 0);
+        this.transform.position = new Vector3(_rock.transform.position.x, yPos, -15);
     }
 
     // Update is called once per frame
@@ -38,7 +38,7 @@ public class RockWarningScript : MonoBehaviour
 
         float yPos = Camera.main.transform.position.y + Camera.main.orthographicSize - 0.5f;
 
-        this.transform.position = new Vector3(_rock.transform.position.x, yPos, -1);
+        this.transform.position = new Vector3(_rock.transform.position.x, yPos, -15);
     }
 
     public void Initialize(Transform rock)
