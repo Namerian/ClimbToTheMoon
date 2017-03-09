@@ -43,6 +43,8 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
     private float _currentLevelScore;
     private float _targetTotalScore;
 
+    private bool _challengeChanged = false;
+
     //==========================================================================================
     //
     //==========================================================================================
@@ -77,7 +79,7 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
         if (_updating)
         {
             bool updatingDone = false;
-            float scoreGain = _sliderScoreGainPerSecond * (_nextLevelRequiredScore/_sliderScoreGainPerSecond) * Time.deltaTime;
+            float scoreGain = _sliderScoreGainPerSecond * (_nextLevelRequiredScore / _sliderScoreGainPerSecond) * Time.deltaTime;
 
             _currentTotalScore += scoreGain;
 
@@ -85,6 +87,10 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
             {
                 scoreGain -= (_currentTotalScore - _targetTotalScore);
                 _currentTotalScore = _targetTotalScore;
+                updatingDone = true;
+            }
+            else if (_currentTotalScore == _targetTotalScore)
+            {
                 updatingDone = true;
             }
 
@@ -101,7 +107,7 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
                 _audioSource.Play();
             }
 
-            if(_currentLevel == GameManagerScript.Instance.MaxLevel)
+            if (_currentLevel == GameManagerScript.Instance.MaxLevel)
             {
                 _levelSlider.value = 1;
             }
@@ -245,8 +251,13 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
 
     public void OnChangeChallengeButton()
     {
-        GameManagerScript.Instance.ChangeChallenge();
-        UpdateChallengePanel();
+        if (!_challengeChanged)
+        {
+            GameManagerScript.Instance.ChangeChallenge();
+            _challengeCompleted.SetActive(false);
+            UpdateChallengePanel();
+            _challengeChanged = true;
+        }
     }
 
     public void OnRestartButton()
@@ -284,7 +295,7 @@ public class ProgressionPanelScript : MonoBehaviour, IMenuPanel
 
         foreach (RewardListElement element in _rewardButtons)
         {
-            if(currentLevel+1 >= element.level)
+            if (currentLevel + 1 >= element.level)
             {
                 element.button.colors = block;
                 element.button.interactable = true;
