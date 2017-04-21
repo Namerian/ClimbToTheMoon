@@ -1,5 +1,7 @@
 Climb To The Moon
 
+Google Play Link: https://play.google.com/store/apps/details?id=com.supinfohbibi.group1
+
 A 2D mobile game for Android made with Unity and shipped on the Google Play Store.
 
 The goal is for the player to climb as high as possible while avoiding obstacles and collecting bonuses.
